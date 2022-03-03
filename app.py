@@ -181,5 +181,4 @@ def getDataById(attractionId):
             return jsonify(error_message), 500
     
 if __name__=='__main__':
-    app.debug=True
     app.run(port=3000)
