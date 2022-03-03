@@ -29,4 +29,9 @@ for all_data in sorted_result:
     for x in image:
         if x.endswith(".jpg") or x.endswith(".JPG"):
             sorted_image.append("https"+x)
+    sorted_image=str(sorted_image)
+    sql="INSERT INTO attractions (id, name, category, description, address, transport, mrt, latitude, longitude, images) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    val=(id, name, cat, description, address, transport, mrt, latitude, longitude, sorted_image)
+    cursor.execute(sql,val)
+    db.commit()
 f.close() # close the file after used
