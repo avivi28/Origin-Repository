@@ -6,7 +6,7 @@ from mysql.connector import pooling
 poolname="mysqlpool"
 poolsize=3
 
-connectionpool=mysql.connector.pooling.MySQLConnectionPool(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, host='localhost', user='root', password="password", database='travel')
+connectionpool=mysql.connector.pooling.MySQLConnectionPool(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, host='localhost', user='root', password="password", database='travel', auth_plugin='mysql_native_password')
 db = connectionpool.get_connection()
 cursor = db.cursor()
 
