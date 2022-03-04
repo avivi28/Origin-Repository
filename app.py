@@ -133,10 +133,6 @@ def getDataById(attractionId):
         cursor.execute("SELECT * FROM attractions WHERE id = %s", (attractionId,))
         Id_data=cursor.fetchone()
 
-        success_idData_return={
-            "data": []
-            }
-
         id=Id_data[0]
         name=Id_data[1]
         category=Id_data[2]
@@ -148,19 +144,20 @@ def getDataById(attractionId):
         longitude=Id_data[8]
         images_data=Id_data[9].replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")
 
-        temp = {
-            "id": id,
-            "name": name,
-            "category": category,
-            "description": description,
-            "address": address,
-            "transport": transport,
-            "mrt": mrt,
-            "latitude": latitude,
-            "longitude": longitude,
-            "images": images_data
-        }
-        success_idData_return["data"].append(temp)
+        success_idData_return={
+            "data": {
+                "id": id,
+                "name": name,
+                "category": category,
+                "description": description,
+                "address": address,
+                "transport": transport,
+                "mrt": mrt,
+                "latitude": latitude,
+                "longitude": longitude,
+                "images": images_data
+                }
+            }
         return jsonify(success_idData_return)
     except TypeError:
         # attractionId=int(attractionId)
