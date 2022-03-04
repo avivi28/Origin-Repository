@@ -1,8 +1,6 @@
-from urllib.error import HTTPError
 from flask import *
 import mysql.connector
 from mysql.connector import pooling
-
 
 poolname="mysqlpool"
 poolsize=3
@@ -120,14 +118,13 @@ def getData():
                 }
                 success_data_return["data"].append(temp) #要一步步塞data進去
             return jsonify(success_data_return)
-    except HTTPError as e:
-        if e.response.status.code==500:
-            true = True
-            error_message={
-                "error": true,
-                "message": "Server Side Error!"
-            }
-            return jsonify(error_message), 500
+    except:
+        true = True
+        error_message={
+            "error": true,
+            "message": "Server Side Error!"
+        }
+        return jsonify(error_message), 500
 
 @app.route("/api/attraction/<attractionId>") #this is path parameter
 def getDataById(attractionId):
@@ -135,6 +132,7 @@ def getDataById(attractionId):
         attractionId=int(attractionId)
         cursor.execute("SELECT * FROM attractions WHERE id = %s", (attractionId,))
         Id_data=cursor.fetchone()
+
         success_idData_return={
             "data": []
             }
@@ -164,21 +162,23 @@ def getDataById(attractionId):
         }
         success_idData_return["data"].append(temp)
         return jsonify(success_idData_return)
-    except HTTPError as e:
-        if e.response.status.code==400:
+    except TypeError:
+        # attractionId=int(attractionId)
+        # if attractionId>=total:    
             true = True
             error_message={
                 "error": true,
-                "message": "Request Error!"
+                "message": "Wrong Request ID!"
             }
-            return jsonify(error_message), 500
-        elif e.response.status.code==500:
+            return jsonify(error_message), 400
+    except:
             true = True
             error_message={
                 "error": true,
                 "message": "Server Side Error!"
             }
             return jsonify(error_message), 500
-    
+
 if __name__=='__main__':
+    app.debug=True
     app.run(port=3000)
