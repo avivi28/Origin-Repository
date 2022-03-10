@@ -183,17 +183,18 @@ footer{
         right: -64px;
         background-position: right bottom;
     }
+    .banner input {
+        width:230px;
+    }
 }
-@media (max-width:360px){
+@media (max-width:400px){
 	.image-data{
 		grid-template-columns: 1fr;
 	}
     .container{
         padding-left: 10px;
         padding-right: 10px;
-    }
-    .banner input {
-        width:230px;
+        overflow: hidden;
     }
     .banner-content {
         padding: 65px 0;
