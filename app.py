@@ -5,15 +5,45 @@ from mysql.connector import pooling
 poolname="mysqlpool"
 poolsize=3
 
-connectionpool=mysql.connector.pooling.MySQLConnectionPool(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, host='localhost', user='root', password="password", database='travel', auth_plugin='mysql_native_password')
-db = connectionpool.get_connection()
-cursor = db.cursor()
-
-app=Flask(__name__)
+CONFIG={
+   "host":'localhost', 
+   "user":'root', 
+   "password":"password", 
+   "database":'travel',
+}
+db=mysql.connector.connect(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, auth_plugin='mysql_native_password',**CONFIG)
+connectionPool=mysql.connector.pooling.MySQLConnectionPool(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, auth_plugin='mysql_native_password',**CONFIG)
+db=connectionPool.get_connection()
+        
+app=Flask(__name__,template_folder='templates',static_folder='static')
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"] = False
 
+def queryAll(sql,val):
+    try:
+        db=connectionPool.get_connection()
+        cursor = db.cursor()
+        cursor.execute(sql,val)
+        return cursor.fetchall()
+    finally:
+        if db.is_connected():
+            cursor.close()
+        if db:
+            db.close()
+
+def queryOne(sql,val):
+    try:
+        db=connectionPool.get_connection()
+        cursor = db.cursor()
+        cursor.execute(sql,val)
+        return cursor.fetchone()
+    finally:
+        if db.is_connected():
+            cursor.close()
+        if db:
+            db.close()
+            
 # Pages
 @app.route("/")
 def index():
@@ -39,10 +69,9 @@ def getData():
 
         if keyword is not None:
             keyword="%"+keyword+"%"
-            cursor.execute("SELECT * FROM attractions WHERE name LIKE %s LIMIT 12 OFFSET %s", (keyword, limit_page,))
-            data=cursor.fetchall()
+            data=queryAll("SELECT * FROM attractions WHERE name LIKE %s LIMIT 12 OFFSET %s", (keyword, limit_page,))
             data=list(data)
-            if len(data)>=12:
+            if len(data)>=13: #in case 有整數
                 next_page=page+1
             else:
                 null=None
@@ -79,8 +108,7 @@ def getData():
                 success_data_return["data"].append(temp)
             return jsonify(success_data_return)
         else:
-            cursor.execute("SELECT * FROM attractions LIMIT 12 OFFSET %s", (limit_page,))
-            data=cursor.fetchall()
+            data=queryAll("SELECT * FROM attractions LIMIT 12 OFFSET %s", (limit_page,))
             data=list(data)
             if len(data)>=12:
                 next_page=page+1
@@ -130,8 +158,7 @@ def getData():
 def getDataById(attractionId):
     try:
         attractionId=int(attractionId)
-        cursor.execute("SELECT * FROM attractions WHERE id = %s", (attractionId,))
-        Id_data=cursor.fetchone()
+        Id_data=queryOne("SELECT * FROM attractions WHERE id = %s", (attractionId,))
 
         id=Id_data[0]
         name=Id_data[1]
@@ -159,9 +186,7 @@ def getDataById(attractionId):
                 }
             }
         return jsonify(success_idData_return)
-    except TypeError:
-        # attractionId=int(attractionId)
-        # if attractionId>=total:    
+    except TypeError: 
             true = True
             error_message={
                 "error": true,
