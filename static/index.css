@@ -2,6 +2,7 @@ body {
     font-family:Noto Sans TC;
     margin: 0px;
     padding: 0px;
+    overflow-x: hidden;
 }
 .container{
     max-width: 1200px;
