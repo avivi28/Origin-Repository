@@ -27,6 +27,8 @@ function getImage(Res){
 		let stitle = result['name'];
         let addressData = result['address'].slice(3,6)
         let catergoryData= result['category']
+        let id = result['id']
+        id.toString()
 		
 		let imageData = document.createElement('div');
 		imageData.className = 'imageData';
@@ -56,6 +58,8 @@ function getImage(Res){
         gridContainer.appendChild(introContainer);
 		image.appendChild(imageData);
         imageData.appendChild(gridContainer);
+
+        data.setAttribute("href","/attraction/${id}")
 	}
 }
 
