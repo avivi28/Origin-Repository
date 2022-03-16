@@ -15,15 +15,17 @@ a, a:hover, a:focus, a:active {
     text-decoration: none;
     color: inherit;
 }
-header{
+header>.container{
     display:flex;
-    position: sticky;
-    background-color: #FFFFFF;
     padding:10px 0px;
-    top:0px;
-    z-index: 2;
     justify-content: space-between;
     align-items: center;
+}
+header{
+    background-color: #FFFFFF;
+    position: sticky;
+    top: 0px;
+    z-index: 99;
 }
 .title {
     font-size: 30px;

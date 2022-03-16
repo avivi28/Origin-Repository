@@ -10,13 +10,17 @@ body {
     padding-right:20px;
     margin:auto;
 }
-header{
+header>.container{
     display:flex;
-    position: sticky, relative;
-    background-color: #FFFFFF;
     padding:10px 0px;
     justify-content: space-between;
     align-items: center;
+}
+header{
+    background-color: #FFFFFF;
+    position: sticky;
+    top: 0px;
+    z-index: 99;
 }
 .title {
     font-size: 30px;
@@ -201,12 +205,6 @@ hr{
     padding: 20px 10px 0px 10px;
 } 
 @media (max-width:1000px){
-    .turn-right{
-        right:15%;
-    }
-    .turn-left{
-        left:15%;
-    }
     .container{
         padding-left: 10px;
         padding-right: 10px;
@@ -233,7 +231,6 @@ hr{
         width:90%;
     }
 }
-
 /*----Image-Slider----*/
 .image-data{
     position: relative;
@@ -290,4 +287,13 @@ img{
     transform: translateX(-50%);
     z-index: 1;
     display: flex;
+}
+
+@media (max-width:540px){
+    .turn-right{
+        right: 100px
+    }
+    .turn-left{
+        left: 100px;
+    }
 }
