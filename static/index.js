@@ -30,7 +30,7 @@ function getImage(Res){
         let id = result['id']
         id.toString()
 		
-		let imageData = document.createElement('div');
+		let imageData = document.createElement('a');
 		imageData.className = 'imageData';
 		let container = document.createElement('div');
 		container.className = 'image-container';
@@ -59,7 +59,7 @@ function getImage(Res){
 		image.appendChild(imageData);
         imageData.appendChild(gridContainer);
 
-        data.setAttribute("href","/attraction/${id}")
+        imageData.setAttribute("href",("/attraction/"+id))
 	}
 }
 

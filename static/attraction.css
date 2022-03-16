@@ -49,3 +49,245 @@ footer{
     width:100%;
     margin-top: 55px;
 }
+.second-block{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px auto;
+}
+.booking{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: 30px;
+}
+.name{
+    font-weight: 700;
+    font-size: 24px;
+    color: #666666;
+    margin-bottom: 15px;
+}
+.catergory{
+    font-weight: 400;
+    font-size: 16px;
+    color: #666666;
+    margin-bottom: 20px;
+}
+.planning-container{
+    background: #E8E8E8;
+    border-radius: 5px;
+    width: 560px;
+    height: auto;
+    padding: 15px 20px 41px;
+    margin-bottom: 18px;
+}
+.planning-title{
+    font-weight: 700;
+    font-size: 16px;
+    color: #666666;
+    padding-bottom: 15px;
+    margin: 0px;
+}
+.planning-description{
+    color: #666666;
+    font-weight: 400;
+    font-size: 16px;
+    margin: 0px;
+    padding-bottom: 15px;
+}
+.planning-subtitle{
+    font-weight: 700;
+    font-size: 16px;
+    color: #666666;
+    margin: 0px;
+    padding-bottom: 15px;
+    margin-right: 5px;
+}
+.date-container{
+    display: flex;
+    align-items: center;
+}
+.date{
+    width: 149px;
+    height: 25px;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 5px 10px;
+}
+.time-container{
+    display: flex;
+    align-items: baseline;
+}
+.time-choser{
+    list-style-type: none;
+    display: flex;
+    font-weight: 400;
+    font-size: 16px;
+    color: #666666;
+    margin: 20px 0px 0px;
+    padding: 0px;
+}
+.time-button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    width: 22px;
+    height: 22px;
+	border: none;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    margin-right: 4px;
+    cursor: pointer;
+}
+.space-between-button{
+    margin-right: 18px;
+}
+.time-button:checked{
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #448899;
+    border: 2px solid #FFF;
+}
+.planning-button{
+    border: none;
+    background: #448899;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 19px;
+    font-weight: 400;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.space-from-submit-button{
+    margin-top: 25px;
+}
+.price-container{
+    display: flex;
+}
+.planning-price{
+    font-weight: 400;
+    font-size: 16px;
+    color: #666666;
+    margin: 0;
+    padding: 0;
+}
+hr{
+    border: 1px solid #E8E8E8;
+    max-width: 1200px;
+}
+.description-container{
+    margin: 40px auto; /*margin:auto for centralising element*/
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-direction: column;
+    position: relative;
+}
+.description{
+    font-weight: 400;
+    font-size: 16px;
+    color: #666666;
+    padding: 0px 10px;
+}
+.subtitle{
+    font-weight: 700;
+    font-size: 16px;
+    color: #666666;
+    padding: 20px 10px 0px 10px;
+} 
+@media (max-width:1000px){
+    .turn-right{
+        right:15%;
+    }
+    .turn-left{
+        left:15%;
+    }
+    .container{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .second-block {
+        flex-direction: column;
+        margin: 20px auto;
+    }
+    .image-data {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+    }
+    img{
+        width: 400px;
+    }
+    .booking {
+        margin: 20px 10px;
+        flex-wrap: nowrap;
+        width: 90%;
+    }
+    .planning-container{
+        width:90%;
+    }
+}
+
+/*----Image-Slider----*/
+.image-data{
+    position: relative;
+    border-radius: 5px;
+    width: 540px;
+    height: 400px;
+    overflow: hidden;
+}
+.image-list{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+img{
+    border-radius: 5px;
+    width: 540px;
+    height: 400px;
+    display: block;
+}
+.turn-left{
+    background-image: url("/static/btn_leftArrow.svg");
+    z-index: 1;
+    width: 36px;
+    height: 36px;
+    opacity: 70%;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.turn-right{
+    background-image: url("/static/btn_rightArrow.svg");
+    z-index: 1;
+    width: 36px;
+    height: 36px;
+    opacity: 70%;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.dots{
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    background: #FFFFFF;
+    margin-left: 12px;
+}
+#dots-list{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: flex;
+}
