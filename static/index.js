@@ -3,7 +3,7 @@ let nextPage=0;
 let keyword;
 let data=document.getElementById('image-data');
 function connect(url) {
-    url='http://127.0.0.1:3000/api/attractions?page=' + pageData.toString()
+    url='/api/attractions?page=' + pageData.toString()
     fetch(url, {
         method:'GET',
     })
@@ -27,8 +27,10 @@ function getImage(Res){
 		let stitle = result['name'];
         let addressData = result['address'].slice(3,6)
         let catergoryData= result['category']
+        let id = result['id']
+        id.toString()
 		
-		let imageData = document.createElement('div');
+		let imageData = document.createElement('a');
 		imageData.className = 'imageData';
 		let container = document.createElement('div');
 		container.className = 'image-container';
@@ -56,6 +58,8 @@ function getImage(Res){
         gridContainer.appendChild(introContainer);
 		image.appendChild(imageData);
         imageData.appendChild(gridContainer);
+
+        imageData.setAttribute("href",("/attraction/"+id))
 	}
 }
 
@@ -68,7 +72,7 @@ let nextPage=1;
 const formData = new FormData(myForm);
 const queryKeyword = new URLSearchParams(formData);
 const params = Object.fromEntries(queryKeyword.entries());
-let queryUrl='http://127.0.0.1:3000/api/attractions?page=' + pageNumber.toString()+'&keyword='+params.keyword.toString();
+let queryUrl='/api/attractions?page=' + pageNumber.toString()+'&keyword='+params.keyword.toString();
 data.textContent="";
 observer.disconnect();
 fetch(queryUrl, {
