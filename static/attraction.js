@@ -2,7 +2,7 @@ let pathName = window.location.pathname;
 let Id = pathName.split('/')[2];
 let data = document.getElementById('image-data');
 
-function connect(url) {
+function connectAPI(url) {
 	url = '/api/attraction/' + Id;
 	fetch(url, {
 		method: 'GET',
@@ -15,7 +15,7 @@ function connect(url) {
 		.catch((error) => (data.innerHTML = '抱歉,出現錯誤QQ'));
 }
 
-connect();
+connectAPI();
 
 function getDataFromID(Res) {
 	let result = Res.data;

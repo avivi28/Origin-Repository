@@ -2,7 +2,7 @@ let pageData = 0;
 let nextPage = 0;
 let keyword;
 let data = document.getElementById('image-data');
-function connect(url) {
+function connectAPI(url) {
 	url = '/api/attractions?page=' + pageData.toString();
 	fetch(url, {
 		method: 'GET',
@@ -113,7 +113,7 @@ function onEnterView(entries, observer) {
 				return;
 			}
 			if (!keyword) {
-				connect();
+				connectAPI();
 				pageData++;
 			} else {
 				searchKeyword();
