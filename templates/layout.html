@@ -1,0 +1,59 @@
+<!--Base Template -->
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css')}}" />
+    {% endblock %}
+    <title>Taipei Trip</title>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, minimum-scale=1"
+		/>
+  </head>
+  <body>
+    <header>
+        <div class="container">
+            <a class="title" href="/">台北一日遊</a>
+            <div class="header-container">
+                <button class="plan">預定行程</button>
+                <button class="signin" onclick="showModal()">登入/註冊</button>
+                <div id="signin-modal" class="modal">
+                    <div class="modal-content">
+                        <p class="decorator-bar"></p>
+                        <p class="close" id="close" onclick="closeModal()"></p>
+                        <p class="modal-title">登入會員帳號</p>
+                        <form>
+                            <input type="text" id="email" placeholder="輸入電子信箱"></input>
+                            <input type="text" id="password" placeholder="輸入密碼"></input>
+                            <submit class="modal-submit">登入帳戶</submit>
+                        </form>
+                        <p class="return-register" id="return-register" onclick="returnRegister()">還沒有帳戶？點此註冊</p>
+                    </div>
+                </div>
+                <div id="register-modal" class="register-modal">
+                  <div class="register-content">
+                      <p class="decorator-bar"></p>
+                      <p class="close" id="close" onclick="closeModal()"></p>
+                      <p class="modal-title">註冊會員帳號</p>
+                      <form>
+                          <input type="text" id="name" placeholder="輸入姓名"></input>
+                          <input type="text" id="email" placeholder="輸入電子信箱"></input>
+                          <input type="text" id="password" placeholder="輸入密碼"></input>
+                          <submit class="modal-submit">註冊新帳戶</submit>
+                      </form>
+                      <p class="return-signin" id="return-signin" onclick="returnSignIn()">已經有帳戶了？點此登入</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </header>
+    {% block content%}{% endblock %} <!--block: the place for child template-->
+    <footer>
+      COPYRIGHT © 2021 台北一日遊
+    </footer>
+  </body>
+  {% block script%}
+  <script src="/static/layout.js">{% endblock%}
+</html>

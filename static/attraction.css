@@ -28,6 +28,7 @@ header {
 	font-weight: bold;
 	color: #448899;
 	justify-content: flex-start;
+	text-decoration: none;
 }
 .plan,
 .signin {
@@ -35,6 +36,11 @@ header {
 	color: #666666;
 	justify-content: flex-end;
 	margin: 10px;
+	border: none;
+	background-color: white;
+	padding: 0px;
+	font-weight: 700;
+	cursor: pointer;
 }
 .header-container {
 	display: flex;
@@ -299,4 +305,102 @@ img {
 	.turn-left {
 		left: 100px;
 	}
+}
+/* The Modal (background) */
+.modal,
+.register-modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 80px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+	background: #ffffff;
+	margin: auto;
+	padding: 0px;
+	box-shadow: 0px 4px 60px #aaaaaa;
+	border-radius: 6px;
+	width: 340px;
+	height: 275px;
+	position: relative;
+}
+.decorator-bar {
+	height: 10px;
+	background: linear-gradient(270deg, #337788 0%, #66aabb 100%);
+	border-radius: 5px 5px 0px 0px;
+	padding: 0px;
+	margin: 0px;
+}
+.modal-title {
+	color: #666666;
+	font-weight: 700;
+	font-size: 24px;
+	margin: 15px;
+	display: flex;
+	justify-content: center;
+}
+#email,
+#name,
+#password {
+	background: #ffffff;
+	border: 1px solid #cccccc;
+	box-sizing: border-box;
+	border-radius: 5px;
+	width: 310px;
+	height: 47px;
+	margin: 0px 15px 10px 15px;
+	padding: 15px;
+	font-weight: 400;
+	font-size: 16px;
+	color: #666666;
+}
+.modal-submit {
+	background: #448899;
+	border-radius: 5px;
+	color: #ffffff;
+	font-weight: 400;
+	font-size: 19px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 20px;
+	margin: 0px 15px;
+}
+.return-register,
+.return-signin {
+	color: #666666;
+	display: flex;
+	align-items: center;
+	font-weight: 400;
+	font-size: 16px;
+	margin: 5px 15px 15px;
+	justify-content: center;
+	cursor: pointer;
+}
+.register-content {
+	width: 340px;
+	height: 332px;
+	background: #ffffff;
+	margin: auto;
+	padding: 0px;
+	box-shadow: 0px 4px 60px #aaaaaa;
+	border-radius: 6px;
+	position: relative;
+}
+.close {
+	background-image: url('/static/icon_close.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	right: 17px;
+	cursor: pointer;
 }

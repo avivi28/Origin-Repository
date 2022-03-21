@@ -1,36 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Taipei Trip </title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css')}}">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <a class="title">台北一日遊</a>
-            <div class="header-container">
-                <a class="plan">預定行程</a> <a class="signin">登入/註冊</a>
-            </div>
-        </div>
-    </header>
-    <div class="banner">
-        <div class="container">
-            <div class="banner-content">
-                <div class="banner-title">輕鬆享受台北一日悠閒</div>
-                <div class="banner-text">探索每個角落，體驗城市的深度旅遊行程</div>
-                <form id="search-form">
-                    <input id="keyword" name="keyword" type="text" placeholder="輸入景點名稱查詢" required/>
-                    <button type="submit">
-                        <img src="/static/icon_search.svg" />
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <a class="container image-data" id="image-data"></a>
-    <footer>COPYRIGHT © 2021 台北一日遊</footer>
-    <script src="/static/index.js"></script>
-</body>
-</html>
+{% extends "layout.html" %} {% block content%}
+<div class="banner">
+	<div class="container">
+		<div class="banner-content">
+			<div class="banner-title">輕鬆享受台北一日悠閒</div>
+			<div class="banner-text">探索每個角落，體驗城市的深度旅遊行程</div>
+			<form id="search-form">
+				<input
+					id="keyword"
+					name="keyword"
+					type="text"
+					placeholder="輸入景點名稱查詢"
+					required
+				/>
+				<button type="submit">
+					<img src="/static/icon_search.svg" />
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+<a class="container image-data" id="image-data"></a>
+{% endblock %} {% block script%}
+<script src="/static/index.js"></script>
+{% endblock%}
