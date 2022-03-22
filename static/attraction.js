@@ -27,7 +27,7 @@ function getDataFromID(Res) {
 	let transportData = result['transport'];
 	let districtData = result['address'].slice(3, 6);
 
-	let name = document.getElementById('name');
+	let name = document.getElementById('attractionName');
 	name.textContent = stitle;
 	let planningDescription = document.getElementById('catergory');
 	planningDescription.textContent = catergoryData + ' at ' + districtData;
