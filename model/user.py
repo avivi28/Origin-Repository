@@ -1,19 +1,22 @@
 from flask import *
 from model.database import queryOne, alterData
+import jwt
 
 true = True
+app.secret_key='my_secret_key'
 
 class UserModel:
     def getUser(self):
-        # flask cookies get 
+        token= request.cookies.get('token')
+        userData= jwt.decode(token, app.secret_key)
         register_data = request.values
         id= register_data["id"]
         userData=queryOne("SELECT * FROM member WHERE id = %s", (id, ))
         userInformation={
             "data": {
-            "id": userData[0],
-            "name": userData[1],
-            "email": userData[2]
+            "id": userData['id'],
+            "name": userData['name'],
+            "email": userData['email']
         }}
         return userInformation
     
@@ -24,10 +27,19 @@ class UserModel:
             password=signin_data['password']
             data=queryOne("SELECT * FROM member WHERE email = %s AND password = %s", (email, password, ))
             if data is not None:
+                payload_data={
+                    "id":data[0],
+                    "name":data[1],
+                    "email":data[2]
+                }
+                token=jwt.encode(
+                    payload=payload_data,
+                    key=app.secret_key
+                )
                 sign_in_success={
                     "ok": true
                     }
-                return sign_in_success
+                return sign_in_success, token
             else:
                 sign_in_fail={
                     "error":true,

@@ -2,7 +2,7 @@ let pathName = window.location.pathname;
 let Id = pathName.split('/')[2];
 let data = document.getElementById('image-data');
 
-function connectAPI(url) {
+function connectAttractionAPI(url) {
 	url = '/api/attraction/' + Id;
 	fetch(url, {
 		method: 'GET',
@@ -15,7 +15,7 @@ function connectAPI(url) {
 		.catch((error) => (data.innerHTML = '抱歉,出現錯誤QQ'));
 }
 
-connectAPI();
+connectAttractionAPI();
 
 function getDataFromID(Res) {
 	let result = Res.data;
@@ -100,30 +100,4 @@ function priceChange() {
 	} else {
 		targetContext.innerHTML = '新台幣 2000 元';
 	}
-}
-
-//-------modal event of signin button------------
-let modal = document.getElementById('signin-modal');
-function showModal() {
-	modal.style.display = 'block';
-}
-
-//-------switch between signin model & register modal----------------
-let returnButton = document.getElementById('return-register');
-let registerModal = document.getElementById('register-modal');
-function returnRegister() {
-	modal.style.display = 'none';
-	registerModal.style.display = 'block';
-}
-
-function returnSignIn() {
-	modal.style.display = 'block';
-	registerModal.style.display = 'none';
-}
-
-//--------close the modal-------------
-let closeButton = document.getElementById('close');
-function closeModal() {
-	modal.style.display = 'none';
-	registerModal.style.display = 'none';
 }

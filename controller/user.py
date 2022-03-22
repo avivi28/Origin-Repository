@@ -21,14 +21,20 @@ def post():
 @user_api.route("/api/user", methods=['PATCH'])
 def patch():
     result = user_model.signIn()
+    json_result = result[0]
+    token = result[1]
     if result is not None:
-        return jsonify(result)
+        resp=make_response()
+        resp.set_cookie(key="token", value=token)
+        return jsonify(json_result), resp
     elif result is None:
-        return jsonify(result), 400
+        return jsonify(json_result), 400
     else:
-        return jsonify(result), 500
+        return jsonify(json_result), 500
     
 @user_api.route("/api/user", methods=['DELETE'])
-def delete(): #session = 0
+def delete():
     result = user_model.logOut()
-    return jsonify(result)
+    resp=Response()
+    resp.set_cookie(key="token", value='', expires=0)
+    return jsonify(result), resp
