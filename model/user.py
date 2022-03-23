@@ -8,17 +8,20 @@ app.secret_key='my_secret_key'
 class UserModel:
     def getUser(self):
         token= request.cookies.get('token')
-        userData= jwt.decode(token, app.secret_key)
-        register_data = request.values
-        id= register_data["id"]
-        userData=queryOne("SELECT * FROM member WHERE id = %s", (id, ))
-        userInformation={
-            "data": {
-            "id": userData['id'],
-            "name": userData['name'],
-            "email": userData['email']
-        }}
-        return userInformation
+        if token is not None:
+            userData= jwt.decode(token, app.secret_key)
+            register_data = request.values
+            id= register_data["id"]
+            userData=queryOne("SELECT * FROM member WHERE id = %s", (id, ))
+            userInformation={
+                "data": {
+                "id": userData['id'],
+                "name": userData['name'],
+                "email": userData['email']
+            }}
+            return userInformation
+        else:
+            return "Sign In first!!"
     
     def signIn(self):
         try:
@@ -45,39 +48,39 @@ class UserModel:
                     "error":true,
                     "message":"登入失敗，帳號或密碼錯誤",
                 }
-                return sign_in_fail
+                return sign_in_fail, 400
         except:
             server_error={
                     "error":true,
                     "message":"伺服器內部錯誤",
                 }
-            return server_error     
+            return server_error, 500
             
     def register(self):
         try:
-            register_data = request.values
-            name= register_data["name"]
-            email= register_data["email"]
-            password= register_data["password"]
+            json_data=request.get_json() #get back json file from request
+            name = json_data["name"]
+            email = json_data["email"]
+            password = json_data["password"]
             data=queryOne("SELECT * FROM member WHERE email = %s", (email, ))
             if data is not None:
                 register_fail={
                     "error":true,
                     "message":"註冊失敗，重複的 Email",
                 }
-                return register_fail
+                return register_fail, 400
             else:
                 alterData("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (name, email, password, ))
                 register_success={
                     "ok": true
                     }
-            return register_success
+            return register_success, 200
         except:   
             server_error={
                     "error":true,
                     "message":"伺服器內部錯誤",
                 }
-            return server_error   
+            return server_error, 500
         
     def logOut(self):
         logout_success = {

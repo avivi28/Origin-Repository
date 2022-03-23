@@ -24,24 +24,25 @@
                         <p class="decorator-bar"></p>
                         <p class="close" id="close" onclick="closeModal()"></p>
                         <p class="modal-title">登入會員帳號</p>
-                        <form>
-                            <input type="text" id="email" placeholder="輸入電子信箱"></input>
-                            <input type="text" id="password" placeholder="輸入密碼"></input>
-                            <submit class="modal-submit">登入帳戶</submit>
+                        <form id="sign_in_form" method="patch">
+                            <input type="text" class="input_format" id="email" placeholder="輸入電子信箱"></input>
+                            <input type="text" class="input_format" id="password" placeholder="輸入密碼"></input>
+                            <input type="submit" value="登入帳戶" class="modal-submit"></input>
                         </form>
                         <p class="return-register" id="return-register" onclick="returnRegister()">還沒有帳戶？點此註冊</p>
                     </div>
                 </div>
                 <div id="register-modal" class="register-modal">
-                  <div class="register-content">
+                  <div class="register-content" id="register-content">
                       <p class="decorator-bar"></p>
                       <p class="close" id="close" onclick="closeModal()"></p>
                       <p class="modal-title">註冊會員帳號</p>
-                      <form>
-                          <input type="text" id="name" placeholder="輸入姓名"></input>
-                          <input type="text" id="email" placeholder="輸入電子信箱"></input>
-                          <input type="text" id="password" placeholder="輸入密碼"></input>
-                          <submit class="modal-submit">註冊新帳戶</submit>
+                      <form id="register_form" method="post">
+                          <input type="text" class="input_format" id="register_name" name="name" placeholder="輸入姓名" required></input>
+                          <input type="text" class="input_format" id="register_email" name="email" placeholder="輸入電子信箱" required></input>
+                          <input type="text" class="input_format" id="register_password" name="password" placeholder="輸入密碼" required></input>
+                          <input type="submit" value="註冊新帳戶" class="modal-submit" id="register_button"></input>
+                          <p id="message_after_submit" style="padding:0px; margin:0px;"></p>
                       </form>
                       <p class="return-signin" id="return-signin" onclick="returnSignIn()">已經有帳戶了？點此登入</p>
                   </div>

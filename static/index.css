@@ -256,9 +256,7 @@ footer {
 	display: flex;
 	justify-content: center;
 }
-#email,
-#name,
-#password {
+.input_format {
 	background: #ffffff;
 	border: 1px solid #cccccc;
 	box-sizing: border-box;
@@ -282,6 +280,10 @@ footer {
 	align-items: center;
 	padding: 10px 20px;
 	margin: 0px 15px;
+	border: none;
+	width: 310px;
+	height: 47px;
+	cursor: pointer;
 }
 .return-register,
 .return-signin {
@@ -313,4 +315,20 @@ footer {
 	position: absolute;
 	right: 17px;
 	cursor: pointer;
+}
+.new_message {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	color: red;
+	font-weight: 600;
+}
+.success_message {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	color: green;
+	font-weight: 600;
 }
