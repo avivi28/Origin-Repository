@@ -12,10 +12,10 @@ def get():
     elif request.method == 'POST':
         return_result = user_model.register()
         post_result = return_result[0]
-        return_status = return_result[1]
-        if return_status == 200:
+        register_status = return_result[1]
+        if register_status == 200:
             return jsonify(post_result)
-        elif return_status == 400:
+        elif register_status == 400:
             return jsonify(post_result), 400
         else:
             return jsonify(post_result), 500
@@ -23,12 +23,13 @@ def get():
     elif request.method == 'PATCH':
         patch_result = user_model.signIn()
         json_result = patch_result[0]
-        token = patch_result[1]
-        if patch_result is not None:
-            resp=make_response()
+        signin_status = patch_result[1]
+        if signin_status == 200:
+            token = patch_result[2]
+            resp=make_response(jsonify(json_result))
             resp.set_cookie(key="token", value=token)
-            return jsonify(json_result), resp
-        elif patch_result is None:
+            return resp
+        elif signin_status == 400:
             return jsonify(json_result), 400
         else:
             return jsonify(json_result), 500

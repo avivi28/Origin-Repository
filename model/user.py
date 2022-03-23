@@ -3,31 +3,28 @@ from model.database import queryOne, alterData
 import jwt
 
 true = True
+null = None
 app.secret_key='my_secret_key'
 
 class UserModel:
     def getUser(self):
         token= request.cookies.get('token')
         if token is not None:
-            userData= jwt.decode(token, app.secret_key)
-            register_data = request.values
-            id= register_data["id"]
-            userData=queryOne("SELECT * FROM member WHERE id = %s", (id, ))
+            tokenData= jwt.decode(token, options={"verify_signature": False}) # options for JWT decode
             userInformation={
-                "data": {
-                "id": userData['id'],
-                "name": userData['name'],
-                "email": userData['email']
-            }}
+                "data":tokenData
+            }
             return userInformation
         else:
-            return "Sign In first!!"
+            nullData={
+                "data": null}
+            return nullData
     
     def signIn(self):
         try:
-            signin_data = request.values
-            email=signin_data['email']
-            password=signin_data['password']
+            json_data=request.get_json()
+            email=json_data['email']
+            password=json_data['password']
             data=queryOne("SELECT * FROM member WHERE email = %s AND password = %s", (email, password, ))
             if data is not None:
                 payload_data={
@@ -42,7 +39,7 @@ class UserModel:
                 sign_in_success={
                     "ok": true
                     }
-                return sign_in_success, token
+                return sign_in_success, 200, token
             else:
                 sign_in_fail={
                     "error":true,
