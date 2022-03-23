@@ -50,29 +50,29 @@ registerForm.addEventListener('submit', function register(ev) {
 			error = Res['error'];
 			if (!error) {
 				successRegister();
-				returnMessage.textContent = '註冊成功^^!!';
+				registerMessage.textContent = '註冊成功^^!!';
 				nameInputForRegister.value = '';
 				emailInputForRegister.value = '';
 				pwInputForRegister.value = '';
 			} else {
 				repeatEmailHandler();
-				returnMessage.textContent = '註冊失敗，Email重複QQ';
+				registerMessage.textContent = '註冊失敗，Email重複QQ';
 			}
 		})
 		.catch((error) => console.log(error));
 });
 
 //-----------Message handling after register------
-let returnMessage = document.getElementById('message_after_submit');
+let registerMessage = document.getElementById('message_after_register');
 
 function repeatEmailHandler() {
-	returnMessage.className = 'new_message';
+	registerMessage.className = 'new_message';
 	const registerContent = document.getElementById('register-content');
 	registerContent.style.height = '355px';
 }
 
 function successRegister() {
-	returnMessage.className = 'success_message';
+	registerMessage.className = 'success_message';
 	const registerContent = document.getElementById('register-content');
 	registerContent.style.height = '355px';
 }
@@ -99,12 +99,19 @@ signInForm.addEventListener('submit', function signIn(ev) {
 			if (!error) {
 				location.reload();
 			} else {
-				repeatEmailHandler();
-				returnMessage.textContent = '登入失敗，帳號或密碼錯誤';
+				signInErrorHandler();
+				signInMessage.textContent = '登入失敗，帳號或密碼錯誤';
 			}
 		})
 		.catch((error) => console.log(error));
 });
+
+const signInMessage = document.getElementById('message_after_signin');
+function signInErrorHandler() {
+	signInMessage.className = 'new_message';
+	const signInContent = document.getElementById('signin-content');
+	signInContent.style.height = '300px';
+}
 
 //--------verify the user status-------
 const signInButton = document.getElementById('signin_button');
@@ -128,3 +135,19 @@ function verifyUser() {
 }
 
 verifyUser();
+
+//---------logOut function----------
+function logOut() {
+	fetch(registerAPIUrl, {
+		method: 'DELETE',
+		credentials: 'same-origin',
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			logOutData = Res['ok'];
+			if (logOutData == true) {
+				location.reload();
+			}
+		})
+		.catch((error) => console.log(error));
+}

@@ -36,6 +36,6 @@ def get():
     
     elif request.method == 'DELETE':
         delete_result = user_model.logOut()
-        resp=Response()
+        resp=make_response(jsonify(delete_result))
         resp.set_cookie(key="token", value='', expires=0)
-        return jsonify(delete_result), resp
+        return resp
