@@ -22,13 +22,13 @@ header > .container {
 	padding: 10px 0px;
 	justify-content: space-between;
 	align-items: center;
-	border-bottom: 1px solid #e8e8e8;
 }
 header {
 	background-color: #ffffff;
 	position: sticky;
 	top: 0px;
 	z-index: 99;
+	border-bottom: 1px solid #e8e8e8;
 }
 .title {
 	font-size: 30px;

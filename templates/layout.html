@@ -41,7 +41,7 @@
                       <form id="register_form" method="post">
                           <input type="text" class="input_format" id="register_name" name="name" placeholder="輸入姓名" required></input>
                           <input type="text" class="input_format" id="register_email" name="email" placeholder="輸入電子信箱" required></input>
-                          <input type="text" class="input_format" id="register_password" name="password" placeholder="輸入密碼" required></input>
+                          <input type="password" class="input_format" id="register_password" name="password" placeholder="輸入密碼" required></input>
                           <input type="submit" value="註冊新帳戶" class="modal-submit" id="register_button"></input>
                           <p id="message_after_register" style="padding:0px; margin:0px;"></p>
                       </form>
@@ -51,7 +51,8 @@
             </div>
         </div>
     </header>
-    {% block content%}{% endblock %} <!--block: the place for child template-->
+    <!--block: the place for child template-->
+    {% block content%}{% endblock %}
     <footer>
       COPYRIGHT © 2021 台北一日遊
     </footer>

@@ -4,6 +4,9 @@ body {
 	padding: 0px;
 	overflow-x: hidden;
 }
+* {
+	box-sizing: border-box;
+}
 .container {
 	max-width: 1200px;
 	padding-left: 20px;
@@ -66,6 +69,8 @@ footer {
 	align-items: center;
 	justify-content: center;
 	margin: 40px auto;
+	max-width: 1200px;
+	width: 100%;
 }
 .booking {
 	display: flex;
@@ -232,12 +237,15 @@ hr {
 		width: 400px;
 	}
 	.booking {
-		margin: 20px 10px;
+		margin: auto;
 		flex-wrap: nowrap;
-		width: 90%;
+		width: 100%;
+		padding-left: 10px;
+		padding-right: 10px;
+		margin-top: 20px;
 	}
 	.planning-container {
-		width: 90%;
+		width: 100%;
 	}
 }
 /*----Image-Slider----*/
