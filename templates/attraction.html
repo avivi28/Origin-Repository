@@ -1,70 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Taipei Trip </title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='attraction.css')}}">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <a class="title">台北一日遊</a>
-            <div class="header-container">
-                <a class="plan">預定行程</a> <a class="signin">登入/註冊</a>
+{% extends "layout.html" %}
+{% block head %}
+{{super()}}
+<link rel="stylesheet" href="{{ url_for('static', filename='attraction.css')}}">
+{% endblock %}
+{% block content %}
+<div class="second-block">
+    <div class="image-data" id="image-data">
+        <div onclick="image_slide(-1)" class="turn-left"></div>
+        <div onclick="image_slide(1)" class="turn-right"></div>
+        <div id="dots-list"></div>
+        <ul id="ul" class="image-list">
+        </ul>
+    </div>
+    <div class="booking">
+        <div class="attraction_name" id="attractionName"></div>
+        <div class="catergory" id="catergory"></div>
+        <div class="planning-container">
+            <p class="planning-title">訂購導覽行程</p>
+            <p class="planning-description">以此景點為中心的一日行程，帶您探索城市角落故事</p>
+            <div class="date-container">
+                <p class="planning-subtitle">選擇日期：</p><input type="date" class="date">
             </div>
-        </div>
-    </header>
-    
-    <div class="second-block">
-        <div class="image-data" id="image-data">
-            <div onclick="image_slide(-1)" class="turn-left"></div>
-            <div onclick="image_slide(1)" class="turn-right"></div>
-            <div id="dots-list"></div>
-            <ul id="ul" class="image-list">
-            </ul>
-        </div>
-        <div class="booking">
-            <div class="name" id="name"></div>
-            <div class="catergory" id="catergory"></div>
-            <div class="planning-container">
-                <p class="planning-title">訂購導覽行程</p>
-                <p class="planning-description">以此景點為中心的一日行程，帶您探索城市角落故事</p>
-                <div class="date-container">
-                    <p class="planning-subtitle">選擇日期：</p><input type="date" class="date">
-                </div>
-                <div class="time-container">    
-                    <p class="planning-subtitle">選擇時間：</p>
-                    <form class="time-choser" onclick="priceChange()">
-                        <div>
-                            <input type="radio" name="button" value="morning" id="morning" class="time-button" checked></input><label class="space-between-button" for="morning">上半天</label>
-                        </div>
-                        <div>
-                            <input type="radio" name="button" value="evening" id="evening" class="time-button"></input><label for="evening">下半天</label>
-                        </div>
-                    </form>
-                </div>
-                <div class="price-container">
-                    <p class="planning-subtitle">導覽費用：</p>
-                    <p class="planning-price" id="price-change">新台幣 2000 元</p>
-                </div>
-                <form class="space-from-submit-button">
-                    <submit class="planning-button">開始預訂行程</submit>
+            <div class="time-container">    
+                <p class="planning-subtitle">選擇時間：</p>
+                <form class="time-choser" onclick="priceChange()">
+                    <div>
+                        <input type="radio" name="button" value="morning" id="morning" class="time-button" checked></input><label class="space-between-button" for="morning">上半天</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="button" value="evening" id="evening" class="time-button"></input><label for="evening">下半天</label>
+                    </div>
                 </form>
             </div>
+            <div class="price-container">
+                <p class="planning-subtitle">導覽費用：</p>
+                <p class="planning-price" id="price-change">新台幣 2000 元</p>
+            </div>
+            <form class="space-from-submit-button">
+                <submit class="planning-button">開始預訂行程</submit>
+            </form>
         </div>
     </div>
+</div>
 
-    <hr/>
-    <div class="description-container">
-        <div class="description" id="description"></div>
-        <div class="subtitle">景點地址：</div>
-        <div class="description" id="address"></div>
-        <div class="subtitle">交通方式：</div>
-        <div class="description" id="transport"></div>
-    </div>
-
-    <footer>COPYRIGHT © 2021 台北一日遊</footer>
-    <script src="/static/attraction.js"></script>
-</body>
-</html>
+<hr/>
+<div class="description-container">
+    <div class="description" id="description"></div>
+    <div class="subtitle">景點地址：</div>
+    <div class="description" id="address"></div>
+    <div class="subtitle">交通方式：</div>
+    <div class="description" id="transport"></div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="/static/attraction.js"></script>
+{% endblock %}

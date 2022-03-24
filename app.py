@@ -1,6 +1,7 @@
 from flask import *
 from controller.attraction import attractions_api
 from controller.id import id_api
+from controller.user import user_api
 
 app=Flask(__name__,template_folder='templates',static_folder='static')
 app.config["JSON_AS_ASCII"]=False
@@ -9,6 +10,7 @@ app.config["JSON_SORT_KEYS"] = False
 
 app.register_blueprint(attractions_api)     
 app.register_blueprint(id_api)      
+app.register_blueprint(user_api)
     
 # Pages
 @app.route("/")

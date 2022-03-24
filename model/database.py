@@ -37,3 +37,16 @@ def queryOne(sql,val):
             cursor.close()
         if db:
             db.close()
+            
+def alterData(sql,val):
+    try:
+        db=connectionPool.get_connection()
+        cursor = db.cursor()
+        cursor.execute(sql,val)
+        db.commit()
+        return cursor.fetchone()
+    finally:
+        if db.is_connected():
+            cursor.close()
+        if db:
+            db.close()
