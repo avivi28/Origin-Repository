@@ -1,0 +1,206 @@
+.container {
+	max-width: 1200px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin: auto;
+}
+body {
+	font-family: Noto Sans TC;
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+}
+* {
+	box-sizing: border-box;
+}
+header > .container {
+	display: flex;
+	padding: 10px 0px;
+	justify-content: space-between;
+	align-items: center;
+}
+header {
+	background-color: #ffffff;
+	position: sticky;
+	top: 0px;
+	z-index: 99;
+	border-bottom: 1px solid #e8e8e8;
+}
+.title {
+	font-size: 30px;
+	font-weight: bold;
+	color: #448899;
+	justify-content: flex-start;
+}
+.plan,
+.signin {
+	font-size: 16px;
+	color: #666666;
+	justify-content: flex-end;
+	margin: 10px;
+	border: none;
+	background-color: white;
+	padding: 0px;
+	font-weight: 700;
+	cursor: pointer;
+}
+.header-container {
+	display: flex;
+	right: 0px;
+	top: 0px;
+}
+footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 45px 0px;
+	position: relative;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 16px;
+	background: #757575;
+	bottom: 0px;
+	width: 100%;
+	margin-top: 55px;
+}
+@media (max-width: 1000px) {
+	.container {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
+@media (max-width: 400px) {
+	.container {
+		overflow: hidden;
+	}
+}
+
+/* The Modal (background) */
+.modal,
+.register-modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 80px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+	background: #ffffff;
+	margin: auto;
+	padding: 0px;
+	box-shadow: 0px 4px 60px #aaaaaa;
+	border-radius: 6px;
+	width: 340px;
+	height: 275px;
+	position: relative;
+}
+.decorator-bar {
+	height: 10px;
+	background: linear-gradient(270deg, #337788 0%, #66aabb 100%);
+	border-radius: 5px 5px 0px 0px;
+	padding: 0px;
+	margin: 0px;
+}
+.modal-title {
+	color: #666666;
+	font-weight: 700;
+	font-size: 24px;
+	margin: 15px;
+	display: flex;
+	justify-content: center;
+}
+.input_format {
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	box-sizing: border-box;
+	border-radius: 5px;
+	width: 310px;
+	height: 47px;
+	margin: 0px 15px 10px 15px;
+	padding: 15px;
+	font-weight: 400;
+	font-size: 16px;
+	color: #666666;
+}
+.modal-submit {
+	background: #448899;
+	border-radius: 5px;
+	color: #ffffff;
+	font-weight: 400;
+	font-size: 19px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 20px;
+	margin: 0px 15px;
+	border: none;
+	width: 310px;
+	height: 47px;
+	cursor: pointer;
+}
+.return-register,
+.return-signin {
+	color: #666666;
+	display: flex;
+	align-items: center;
+	font-weight: 400;
+	font-size: 16px;
+	margin: 5px 15px 15px;
+	justify-content: center;
+	cursor: pointer;
+}
+.register-content {
+	width: 340px;
+	height: 332px;
+	background: #ffffff;
+	margin: auto;
+	padding: 0px;
+	box-shadow: 0px 4px 60px #aaaaaa;
+	border-radius: 6px;
+	position: relative;
+}
+.close {
+	background-image: url('/static/icon_close.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	right: 17px;
+	cursor: pointer;
+}
+.new_message {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	color: red;
+	font-weight: 600;
+}
+.success_message {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	color: green;
+	font-weight: 600;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+	border: 1px solid #ccc;
+	-webkit-text-fill-color: #666666;
+	transition: background-color 5000s ease-in-out 0s;
+}
