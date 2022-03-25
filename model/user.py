@@ -25,7 +25,7 @@ class UserModel:
             json_data=request.get_json()
             email=json_data['email']
             password=json_data['password']
-            data=queryOne("SELECT * FROM member WHERE email = %s AND password = %s", (email, password, ))
+            data=queryOne("SELECT * FROM member WHERE email = %s AND password = MD5(%s)", (email, password, ))
             if data is not None:
                 payload_data={
                     "id":data[0],
@@ -67,7 +67,7 @@ class UserModel:
                 }
                 return register_fail, 400
             else:
-                alterData("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (name, email, password, ))
+                alterData("INSERT INTO member (name, email, password) VALUES (%s, %s, MD5(%s))", (name, email, password, ))
                 register_success={
                     "ok": true
                     }
