@@ -1,6 +1,8 @@
+from base64 import encode
 from flask import *
 from model.database import queryOne, alterData
 import jwt
+from flask_bcrypt import generate_password_hash, check_password_hash
 
 true = True
 null = None
@@ -23,23 +25,26 @@ class UserModel:
     def signIn(self):
         try:
             json_data=request.get_json()
-            email=json_data['email']
-            password=json_data['password']
-            data=queryOne("SELECT * FROM member WHERE email = %s AND password = MD5(%s)", (email, password, ))
+            input_email=json_data['email']
+            input_password=json_data['password']
+            data=queryOne("SELECT * FROM member WHERE email = %s", (input_email, ))
+            hashed_password=data[3]
+            checked_password= check_password_hash(hashed_password, input_password) # compare hashed_password with input_password
             if data is not None:
-                payload_data={
-                    "id":data[0],
-                    "name":data[1],
-                    "email":data[2]
-                }
-                token=jwt.encode(
-                    payload=payload_data,
-                    key=app.secret_key
-                )
-                sign_in_success={
-                    "ok": true
+                if checked_password is True:
+                    payload_data={
+                        "id":data[0],
+                        "name":data[1],
+                        "email":data[2]
                     }
-                return sign_in_success, 200, token
+                    token=jwt.encode(
+                        payload=payload_data,
+                        key=app.secret_key
+                    )
+                    sign_in_success={
+                        "ok": true
+                        }
+                    return sign_in_success, 200, token
             else:
                 sign_in_fail={
                     "error":true,
@@ -51,15 +56,16 @@ class UserModel:
                     "error":true,
                     "message":"伺服器內部錯誤",
                 }
-            return server_error, 500
+            return server_error, 500, json_data
             
     def register(self):
         try:
             json_data=request.get_json() #get back json file from request
-            name = json_data["name"]
-            email = json_data["email"]
-            password = json_data["password"]
-            data=queryOne("SELECT * FROM member WHERE email = %s", (email, ))
+            input_name = json_data["name"]
+            input_email = json_data["email"]
+            input_password = json_data["password"]
+            hashed_password = generate_password_hash(input_password)
+            data=queryOne("SELECT * FROM member WHERE email = %s", (input_email, ))
             if data is not None:
                 register_fail={
                     "error":true,
@@ -67,7 +73,7 @@ class UserModel:
                 }
                 return register_fail, 400
             else:
-                alterData("INSERT INTO member (name, email, password) VALUES (%s, %s, MD5(%s))", (name, email, password, ))
+                alterData("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (input_name, input_email, hashed_password, ))
                 register_success={
                     "ok": true
                     }
