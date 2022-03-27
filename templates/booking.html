@@ -1,0 +1,99 @@
+{% extends "layout.html" %} {% block head %} {{super()}}
+<link rel="stylesheet" href="{{ url_for('static', filename='booking.css')}}" />
+{% endblock %} {% block content %}
+<div class="entireContainer">
+	<div class="infomationContainer">
+		<p class="infomationContainer__title">
+			您好，{{user_name}}，待預訂的行程如下：
+		</p>
+		<img />
+		<p class="infomationContainer__selectedName">
+			台北一日遊：{{attraction_name}}
+		</p>
+		<p class="infomationContainer__selectedInfo">日期：{{selected_date}}</p>
+		<p class="infomationContainer__selectedInfo">時間：{{selected_time}}</p>
+		<p class="infomationContainer__selectedInfo">費用：{{selected_fee}}</p>
+		<p class="infomationContainer__selectedInfo">地點：{{selected_place}}</p>
+	</div>
+	<hr />
+	<div class="contactContainer">
+		<p class="contactContainer__title">您的聯絡資訊</p>
+		<form>
+			<p>
+				聯絡姓名：<input
+					class="contactContainer_inputData"
+					type="text"
+					name="name"
+					required
+					placeholder="Yakko"
+				/>
+			</p>
+			<p>
+				連絡信箱：<input
+					class="contactContainer_inputData"
+					type="text"
+					inputmode="email"
+					name="email"
+					required
+					placeholder="imyakkowu@gmail.com"
+				/>
+			</p>
+			<p>
+				手機號碼：<input
+					class="contactContainer_inputData"
+					type="text"
+					inputmode="numeric"
+					name="phone_number"
+					required
+				/>
+			</p>
+		</form>
+		<p class="contactContainer__remindText">
+			請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
+		</p>
+	</div>
+	<hr />
+	<div class="paymentContainer">
+		<p class="paymentContainer__title">信用卡付款資訊</p>
+		<form>
+			<p>
+				卡片號碼：<input
+					class="paymentContainer__inputData"
+					type="tel"
+					required
+					inputmode="numeric"
+					pattern="[0-9]+"
+					maxlength="19"
+					placeholder="**** **** **** ****"
+					oninput="prettierCreditCardInput()"
+				/>
+			</p>
+			<p>
+				過期時間：<input
+					class="paymentContainer__inputData"
+					type="tel"
+					required
+					inputmode="numeric"
+					pattern="\d*"
+					maxlength="7"
+					placeholder="MM / YY"
+				/>
+			</p>
+			<p>
+				驗證密碼：<input
+					class="paymentContainer__inputData"
+					type="tel"
+					required
+					inputmode="numeric"
+					pattern="\d*"
+					maxlength="4"
+					placeholder="CVC"
+				/>
+			</p>
+		</form>
+	</div>
+	<hr class="third_line" />
+</div>
+{% endblock %} {% block script %}
+<script src="/static/booking.js"></script>
+{% endblock %}
