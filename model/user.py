@@ -1,12 +1,15 @@
-from base64 import encode
 from flask import *
 from model.database import queryOne, alterData
 import jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
+import os
+from dotenv import load_dotenv
+
+load_dotenv("./data/.env")
 
 true = True
 null = None
-app.secret_key='my_secret_key'
+app.secret_key= os.getenv("secret_key")
 
 class UserModel:
     def getUser(self):
