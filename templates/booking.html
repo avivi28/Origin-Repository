@@ -16,17 +16,16 @@
 		<p class="infomationContainer__selectedInfo">地點：{{selected_place}}</p>
 	</div>
 	<hr />
+    <form>
 	<div class="contactContainer">
 		<p class="contactContainer__title">您的聯絡資訊</p>
-		<form>
 			<p>
 				聯絡姓名：<input
 					class="contactContainer_inputData"
 					type="text"
 					name="name"
 					required
-					placeholder="Yakko"
-				/>
+				/>{{user_name}}
 			</p>
 			<p>
 				連絡信箱：<input
@@ -35,8 +34,7 @@
 					inputmode="email"
 					name="email"
 					required
-					placeholder="imyakkowu@gmail.com"
-				/>
+				/>{{user_email}}
 			</p>
 			<p>
 				手機號碼：<input
@@ -47,7 +45,6 @@
 					required
 				/>
 			</p>
-		</form>
 		<p class="contactContainer__remindText">
 			請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
 		</p>
@@ -55,7 +52,6 @@
 	<hr />
 	<div class="paymentContainer">
 		<p class="paymentContainer__title">信用卡付款資訊</p>
-		<form>
 			<p>
 				卡片號碼：<input
 					class="paymentContainer__inputData"
@@ -90,9 +86,13 @@
 					placeholder="CVC"
 				/>
 			</p>
-		</form>
 	</div>
-	<hr class="third_line" />
+	<hr />
+	<div class="submitContainer">
+        <p class="submitContainer__totalPrice">總價：新台幣 2000 元</p>
+        <input class="submitContainer__button" type="submit" value="確認訂購並付款">
+    </form>
+    </div>
 </div>
 {% endblock %} {% block script %}
 <script src="/static/booking.js"></script>

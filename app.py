@@ -2,6 +2,7 @@ from flask import *
 from controller.attraction import attractions_api
 from controller.id import id_api
 from controller.user import user_api
+from controller.booking import booking_api
 from flask_bcrypt import Bcrypt
 
 app=Flask(__name__,template_folder='templates',static_folder='static')
@@ -14,6 +15,7 @@ bcrypt = Bcrypt(app)
 app.register_blueprint(attractions_api)     
 app.register_blueprint(id_api)      
 app.register_blueprint(user_api)
+app.register_blueprint(booking_api)
     
 # Pages
 @app.route("/")
@@ -30,5 +32,7 @@ def thankyou():
 	return render_template("thankyou.html")
 
 if __name__=='__main__':
-    app.debug=True
-    app.run(port=3000)
+	if app.run(port=3000):
+		app.debug=True
+	if app.run(host="0.0.0.0",port=3000):
+		app.debug=False

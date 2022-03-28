@@ -1,5 +1,5 @@
 from flask import *
-from model.database import queryOne, alterData
+from model.database import queryOne, uploadData
 import jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
 import os
@@ -76,7 +76,7 @@ class UserModel:
                 }
                 return register_fail, 400
             else:
-                alterData("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (input_name, input_email, hashed_password, ))
+                uploadData("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (input_name, input_email, hashed_password, ))
                 register_success={
                     "ok": true
                     }

@@ -43,7 +43,7 @@ def queryOne(sql,val):
         if db:
             db.close()
             
-def alterData(sql,val):
+def uploadData(sql,val):
     try:
         db=connectionPool.get_connection()
         cursor = db.cursor()

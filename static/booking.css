@@ -23,7 +23,8 @@ p {
 .infomationContainer__selectedInfo,
 .contactContainer__title,
 .paymentContainer__title,
-.contactContainer__remindText {
+.contactContainer__remindText,
+.submitContainer__totalPrice {
 	font-weight: 700;
 }
 hr {
@@ -39,7 +40,8 @@ input {
 }
 .contactContainer_inputData,
 .paymentContainer__title,
-.contactContainer__remindText {
+.contactContainer__remindText,
+.submitContainer__totalPrice {
 	font-size: 16px;
 }
 .contactContainer__title,
@@ -50,7 +52,25 @@ input {
 	margin-top: 5px;
 	margin-bottom: 45px;
 }
-.third_line {
-	margin-top: 25px;
-	margin-bottom: 180px;
+.submitContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+.submitContainer__button {
+	background: #448899;
+	border-radius: 5px;
+	width: 173px;
+	height: auto;
+	padding: 10px 20px;
+	color: #ffffff;
+	font-weight: 400;
+	font-size: 19px;
+	margin-bottom: 62px;
+}
+.submitContainer__totalPrice {
+	margin: 43px 0px 25px;
+}
+footer {
+	margin-top: 0px;
 }
