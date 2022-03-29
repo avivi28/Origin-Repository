@@ -1,21 +1,23 @@
 {% extends "layout.html" %} {% block head %} {{super()}}
 <link rel="stylesheet" href="{{ url_for('static', filename='booking.css')}}" />
 {% endblock %} {% block content %}
+<div class="bodyContainer">
 <div class="entireContainer">
-	<div class="infomationContainer__title" id="title_username">
+	<div class="informationContainer__title" id="title_username">
 	</div>
 	<div id="entire_information">
-	<div class="infomationContainer">
+	<div class="informationContainer">
 		<div class="attraction_image--container">
-			<img id="attraction_image" />
+			<p class="loader" id="loader"></p><img id="attraction_image" />
 		</div>
-		<div class="infomationContainer__selectedInfo--container">
-			<p class="infomationContainer__selectedName" id="attraction_name"></p>
-			<p class="infomationContainer__selectedInfo">日期：<span id="selected_date"></span></p>
-			<p class="infomationContainer__selectedInfo">時間：<span id="selected_time"></span></p>
-			<p class="infomationContainer__selectedInfo">費用：<span id="selected_fee"></span></p>
-			<p class="infomationContainer__selectedInfo">地點：<span id="selected_place"></span></p>
+		<div class="informationContainer__selectedInfo--container">
+			<p class="informationContainer__selectedName" id="attraction_name"></p>
+			<p class="informationContainer__selectedInfo">日期：<span id="selected_date"></span></p>
+			<p class="informationContainer__selectedInfo">時間：<span id="selected_time"></span></p>
+			<p class="informationContainer__selectedInfo">費用：<span id="selected_fee"></span></p>
+			<p class="informationContainer__selectedInfo">地點：<span id="selected_place"></span></p>
 		</div>
+		<div id="delete_button" onclick="deleteBooking()"></div>
 	</div>
 	<hr />
     <form>
@@ -98,6 +100,7 @@
     </form>
     </div>
 	</div>
+</div>
 </div>
 {% endblock %} {% block script %}
 <script src="/static/booking.js"></script>

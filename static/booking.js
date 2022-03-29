@@ -24,18 +24,21 @@ let footer = document.querySelector('footer');
 function getBookingAPI() {
 	fetch(bookingAPIUrl, {
 		method: 'GET',
-		credentials: 'same-origin', //for bring cookies
+		credentials: 'same-origin',
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
 			console.log(Res);
 			const getData = Res['data'];
-			// const errorData = Res['error'];
 			if (getData == null) {
 				bookingBody.textContent = '目前沒有任何待預訂的行程';
 				bookingBody.style = 'margin: 35px 0px 40px';
 				footer.style = 'padding-bottom: 806px';
 			} else {
+				function Timer() {
+					loadingTimer = setTimeout(showLoading, 1000);
+				}
+				Timer();
 				showData(Res);
 				showUserDate();
 			}
@@ -53,7 +56,7 @@ function showData(Res) {
 
 	let attractionImage = document.getElementById('attraction_image');
 	attractionImage.src = attractionData['image'];
-	attractionImage.className = 'infomationContainer_selectedAttractionImg';
+	attractionImage.className = 'informationContainer_selectedAttractionImg';
 
 	let attractionName = document.getElementById('attraction_name');
 	attractionName.textContent = '台北一日遊：' + attractionData['name'];
@@ -102,4 +105,28 @@ function showUserDate() {
 	contactName.setAttribute('value', userName);
 	let contactEmail = document.getElementById('contact_email');
 	contactEmail.setAttribute('value', userEmail);
+}
+
+//-----------delete the selected booking--------------
+function deleteBooking() {
+	fetch(bookingAPIUrl, {
+		method: 'DELETE',
+		credentials: 'same-origin',
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			deleteData = Res['ok'];
+			if (deleteData == true) {
+				location.reload();
+			}
+		})
+		.catch((error) => console.log(error));
+}
+
+//--------loading effect-----------
+let loadingImage = document.getElementById('loader');
+
+function showLoading() {
+	document.getElementById('loader').style.display = 'none';
+	document.getElementById('attraction_image').style.display = 'block';
 }

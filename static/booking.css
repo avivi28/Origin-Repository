@@ -7,20 +7,24 @@ p {
 	margin: 0;
 	padding: 0;
 }
+.bodyContainer {
+	max-width: 1200px;
+	margin: 0 auto;
+}
 .entireContainer {
 	max-width: 1200px;
 	margin: 0px auto;
 }
-.infomationContainer__title {
+.informationContainer__title {
 	font-weight: 700;
 	margin: 46px 0px 35px 0px;
 }
-.infomationContainer__selectedName {
+.informationContainer__selectedName {
 	color: #448899;
 	font-weight: 700;
 	font-size: 16px;
 }
-.infomationContainer__selectedInfo,
+.informationContainer__selectedInfo,
 .contactContainer__title,
 .paymentContainer__title,
 .contactContainer__remindText,
@@ -71,7 +75,7 @@ input {
 .submitContainer__totalPrice {
 	margin: 43px 0px 25px;
 }
-.infomationContainer__selectedInfo--container {
+.informationContainer__selectedInfo--container {
 	margin-left: 22px;
 }
 footer {
@@ -83,37 +87,81 @@ footer {
 #selected_place {
 	font-weight: 400;
 }
-.infomationContainer_selectedAttractionImg {
+.informationContainer_selectedAttractionImg {
 	width: 100%;
+	display: none;
 }
-.infomationContainer {
+.informationContainer {
 	display: flex;
 	margin: 35px 0px 40px;
+	position: relative;
 }
 .attraction_image--container {
 	max-width: 340px;
 	height: 256px;
 	display: flex;
 	justify-content: center;
+	position: relative;
+	width: 100%;
 }
-.infomationContainer__selectedName {
+.informationContainer__selectedName {
 	margin-bottom: 30px;
 	margin-top: 7px;
 }
-.infomationContainer__selectedInfo {
+.informationContainer__selectedInfo {
 	margin-bottom: 20px;
 }
 .entireContainer {
 	margin: 0px 10px;
 }
+#delete_button {
+	background-image: url('/static/images/icon_delete.svg');
+	width: 30px;
+	height: 30px;
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 0px;
+	right: 39px;
+}
+.loader {
+	position: absolute;
+	top: 72px;
+	z-index: 1;
+	width: 120px;
+	height: 120px;
+	border: 16px solid #f3f3f3;
+	border-radius: 50%;
+	border-top: 16px solid #448899;
+	animation: spin 2s linear infinite;
+}
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+@media (max-width: 700px) {
+	#delete_button {
+		top: 250px;
+	}
+}
 @media (max-width: 500px) {
-	.infomationContainer {
+	.informationContainer {
 		flex-direction: column;
 	}
-	.infomationContainer__selectedInfo--container {
+	.informationContainer__selectedInfo--container {
 		margin-left: 0px;
 	}
-	.infomationContainer__title {
+	.informationContainer__title {
 		margin-bottom: 0px;
+	}
+	#delete_button {
+		top: 477px;
+		right: 20px;
+	}
+	.attraction_image--container {
+		margin: 0px auto;
 	}
 }
