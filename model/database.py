@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv("./data/.env")
 
 poolname="mysqlpool"
-poolsize=3
+poolsize=10
 mysql_password = os.getenv("mysql_password")
 
 CONFIG={

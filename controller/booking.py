@@ -10,8 +10,6 @@ def get():
         get_result = return_result[0]
         get_status = return_result[1]
         if get_status == 200:
-            # user_name = return_result[2]
-            # user_email = return_result[3]
             return jsonify(get_result)
         else:
             return jsonify(get_result), 403

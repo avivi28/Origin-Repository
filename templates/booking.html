@@ -2,19 +2,20 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='booking.css')}}" />
 {% endblock %} {% block content %}
 <div class="entireContainer">
-	<div class="infomationContainer__title">
-		您好，{{user_name}}，待預訂的行程如下：
+	<div class="infomationContainer__title" id="title_username">
 	</div>
 	<div id="entire_information">
 	<div class="infomationContainer">
-		<img />
-		<p class="infomationContainer__selectedName">
-			台北一日遊：{{attraction_name}}
-		</p>
-		<p class="infomationContainer__selectedInfo">日期：{{selected_date}}</p>
-		<p class="infomationContainer__selectedInfo">時間：{{selected_time}}</p>
-		<p class="infomationContainer__selectedInfo">費用：{{selected_fee}}</p>
-		<p class="infomationContainer__selectedInfo">地點：{{selected_place}}</p>
+		<div class="attraction_image--container">
+			<img id="attraction_image" />
+		</div>
+		<div class="infomationContainer__selectedInfo--container">
+			<p class="infomationContainer__selectedName" id="attraction_name"></p>
+			<p class="infomationContainer__selectedInfo">日期：<span id="selected_date"></span></p>
+			<p class="infomationContainer__selectedInfo">時間：<span id="selected_time"></span></p>
+			<p class="infomationContainer__selectedInfo">費用：<span id="selected_fee"></span></p>
+			<p class="infomationContainer__selectedInfo">地點：<span id="selected_place"></span></p>
+		</div>
 	</div>
 	<hr />
     <form>
@@ -26,7 +27,8 @@
 					type="text"
 					name="name"
 					required
-				/>{{user_name}}
+					id="contact_name"
+				/>
 			</p>
 			<p>
 				連絡信箱：<input
@@ -35,7 +37,8 @@
 					inputmode="email"
 					name="email"
 					required
-				/>{{user_email}}
+					id="contact_email"
+				/>
 			</p>
 			<p>
 				手機號碼：<input
@@ -90,7 +93,7 @@
 	</div>
 	<hr />
 	<div class="submitContainer">
-        <p class="submitContainer__totalPrice">總價：新台幣 2000 元</p>
+        <p class="submitContainer__totalPrice" id="total_price"></p>
         <input class="submitContainer__button" type="submit" value="確認訂購並付款">
     </form>
     </div>
