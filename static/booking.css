@@ -122,6 +122,7 @@ footer {
 	position: absolute;
 	top: 0px;
 	right: 39px;
+	cursor: pointer;
 }
 #loader {
 	position: absolute;
