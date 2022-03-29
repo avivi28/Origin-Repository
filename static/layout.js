@@ -151,3 +151,15 @@ function logOut() {
 		})
 		.catch((error) => console.log(error));
 }
+
+//---------Connect to Booking Page------
+let bookingButton = document.getElementById('booking_button');
+let cookie = document.cookie;
+
+function connectBooking() {
+	if (cookie == '') {
+		showModal();
+	} else {
+		location.href = '/booking';
+	}
+}
