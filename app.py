@@ -32,7 +32,7 @@ def thankyou():
 	return render_template("thankyou.html")
 
 if __name__=='__main__':
-	if app.run(port=3000):
-		app.debug=True
-	if app.run(host="0.0.0.0",port=3000):
+	if app.run(host="0.0.0.0"):
 		app.debug=False
+	if app.run(host="127.0.0.1"):
+		app.debug=True

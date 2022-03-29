@@ -2,10 +2,11 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='booking.css')}}" />
 {% endblock %} {% block content %}
 <div class="entireContainer">
+	<div class="infomationContainer__title">
+		您好，{{user_name}}，待預訂的行程如下：
+	</div>
+	<div id="entire_information">
 	<div class="infomationContainer">
-		<p class="infomationContainer__title">
-			您好，{{user_name}}，待預訂的行程如下：
-		</p>
 		<img />
 		<p class="infomationContainer__selectedName">
 			台北一日遊：{{attraction_name}}
@@ -93,6 +94,7 @@
         <input class="submitContainer__button" type="submit" value="確認訂購並付款">
     </form>
     </div>
+	</div>
 </div>
 {% endblock %} {% block script %}
 <script src="/static/booking.js"></script>

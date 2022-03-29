@@ -93,9 +93,6 @@
 	margin-right: 4px;
 	cursor: pointer;
 }
-.space-between-button {
-	margin-right: 18px;
-}
 .time-button:checked {
 	width: 22px;
 	height: 22px;
