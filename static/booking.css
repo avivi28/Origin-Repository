@@ -71,6 +71,49 @@ input {
 .submitContainer__totalPrice {
 	margin: 43px 0px 25px;
 }
+.infomationContainer__selectedInfo--container {
+	margin-left: 22px;
+}
 footer {
 	margin-top: 0px;
+}
+#selected_date,
+#selected_time,
+#selected_fee,
+#selected_place {
+	font-weight: 400;
+}
+.infomationContainer_selectedAttractionImg {
+	width: 100%;
+}
+.infomationContainer {
+	display: flex;
+	margin: 35px 0px 40px;
+}
+.attraction_image--container {
+	max-width: 340px;
+	height: 256px;
+	display: flex;
+	justify-content: center;
+}
+.infomationContainer__selectedName {
+	margin-bottom: 30px;
+	margin-top: 7px;
+}
+.infomationContainer__selectedInfo {
+	margin-bottom: 20px;
+}
+.entireContainer {
+	margin: 0px 10px;
+}
+@media (max-width: 500px) {
+	.infomationContainer {
+		flex-direction: column;
+	}
+	.infomationContainer__selectedInfo--container {
+		margin-left: 0px;
+	}
+	.infomationContainer__title {
+		margin-bottom: 0px;
+	}
 }

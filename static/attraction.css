@@ -196,7 +196,7 @@ img {
 	display: block;
 }
 .turn-left {
-	background-image: url('/static/btn_leftArrow.svg');
+	background-image: url('/static/images/btn_leftArrow.svg');
 	z-index: 1;
 	width: 36px;
 	height: 36px;
@@ -207,7 +207,7 @@ img {
 	transform: translateY(-50%);
 }
 .turn-right {
-	background-image: url('/static/btn_rightArrow.svg');
+	background-image: url('/static/images/btn_rightArrow.svg');
 	z-index: 1;
 	width: 36px;
 	height: 36px;

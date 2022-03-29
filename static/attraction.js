@@ -115,9 +115,9 @@ bookingForm.addEventListener('submit', function bookingSubmit(ev) {
 	const jsonData = Object.fromEntries(bookingInput.entries());
 	let selectedTime;
 	if (jsonData['button'] == 2000) {
-		selectedTime = 'morning';
+		selectedTime = '早上 9 點到下午 4 點';
 	} else {
-		selectedTime = 'evening';
+		selectedTime = '下午 5 點到下午 10 點';
 	}
 	let bodyData = {
 		attractionId: attractionId,
@@ -136,7 +136,12 @@ bookingForm.addEventListener('submit', function bookingSubmit(ev) {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
-			console.log(Res);
+			const okData = Res['ok'];
+			if (okData == true) {
+				location.href = '/booking';
+			} else {
+				document.getElementById('signin-modal').style.display = 'block';
+			}
 		})
 		.catch((error) => console.log(error));
 });
