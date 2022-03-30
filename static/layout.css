@@ -166,7 +166,7 @@ footer {
 	position: relative;
 }
 .close {
-	background-image: url('/static/icon_close.svg');
+	background-image: url('/static/images/icon_close.svg');
 	background-repeat: no-repeat;
 	background-position: center;
 	width: 20px;

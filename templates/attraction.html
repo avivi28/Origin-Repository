@@ -18,26 +18,26 @@
         <div class="planning-container">
             <p class="planning-title">訂購導覽行程</p>
             <p class="planning-description">以此景點為中心的一日行程，帶您探索城市角落故事</p>
-            <div class="date-container">
-                <p class="planning-subtitle">選擇日期：</p><input type="date" class="date">
-            </div>
-            <div class="time-container">    
-                <p class="planning-subtitle">選擇時間：</p>
-                <form class="time-choser" onclick="priceChange()">
-                    <div>
-                        <input type="radio" name="button" value="morning" id="morning" class="time-button" checked></input><label class="space-between-button" for="morning">上半天</label>
+            <form id="bookingForm">
+                <div class="date-container">
+                    <p class="planning-subtitle">選擇日期：</p><input type="date" name="date" class="date" id="date" required>
+                </div>
+                <div class="time-container">    
+                    <p class="planning-subtitle">選擇時間：</p>
+                    <div class="time-choser" onclick="priceChange()">
+                        <div>
+                            <input type="radio" name="button" value="2000" id="morning" class="time-button" checked></input><label class="space-between-button" for="morning">上半天</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="button" value="2500" id="evening" class="time-button"></input><label for="evening">下半天</label>
+                        </div>
                     </div>
-                    <div>
-                        <input type="radio" name="button" value="evening" id="evening" class="time-button"></input><label for="evening">下半天</label>
-                    </div>
-                </form>
-            </div>
-            <div class="price-container">
-                <p class="planning-subtitle">導覽費用：</p>
-                <p class="planning-price" id="price-change">新台幣 2000 元</p>
-            </div>
-            <form class="space-from-submit-button">
-                <submit class="planning-button">開始預訂行程</submit>
+                </div>
+                <div class="price-container">
+                    <p class="planning-subtitle">導覽費用：</p>
+                    <p class="planning-price" id="price-change">新台幣 2000 元</p>
+                </div>
+                <input type="submit" class="planning-button" value="開始預訂行程" />
             </form>
         </div>
     </div>

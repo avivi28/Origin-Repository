@@ -1,0 +1,108 @@
+{% extends "layout.html" %} {% block head %} {{super()}}
+<link rel="stylesheet" href="{{ url_for('static', filename='booking.css')}}" />
+{% endblock %} {% block content %}
+<div class="bodyContainer">
+<div class="entireContainer">
+	<div class="informationContainer__title" id="title_username">
+	</div>
+	<div id="entire_information">
+	<div class="informationContainer">
+		<div class="attraction_image--container">
+			<p id="loader"></p><img id="attraction_image" />
+		</div>
+		<div class="informationContainer__selectedInfo--container">
+			<p class="informationContainer__selectedName" id="attraction_name"></p>
+			<p class="informationContainer__selectedInfo">日期：<span id="selected_date"></span></p>
+			<p class="informationContainer__selectedInfo">時間：<span id="selected_time"></span></p>
+			<p class="informationContainer__selectedInfo">費用：<span id="selected_fee"></span></p>
+			<p class="informationContainer__selectedInfo">地點：<span id="selected_place"></span></p>
+		</div>
+		<div id="delete_button" onclick="deleteBooking()"></div>
+	</div>
+	<hr />
+    <form>
+	<div class="contactContainer">
+		<p class="contactContainer__title">您的聯絡資訊</p>
+			<p>
+				聯絡姓名：<input
+					class="contactContainer_inputData"
+					type="text"
+					name="name"
+					required
+					id="contact_name"
+				/>
+			</p>
+			<p>
+				連絡信箱：<input
+					class="contactContainer_inputData"
+					type="text"
+					inputmode="email"
+					name="email"
+					required
+					id="contact_email"
+				/>
+			</p>
+			<p>
+				手機號碼：<input
+					class="contactContainer_inputData"
+					type="text"
+					inputmode="numeric"
+					name="phone_number"
+					required
+				/>
+			</p>
+		<p class="contactContainer__remindText">
+			請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
+		</p>
+	</div>
+	<hr />
+	<div class="paymentContainer">
+		<p class="paymentContainer__title">信用卡付款資訊</p>
+			<p>
+				卡片號碼：<input
+					class="paymentContainer__inputData"
+					type="tel"
+					required
+					inputmode="numeric"
+					pattern="[0-9]+"
+					maxlength="19"
+					placeholder="**** **** **** ****"
+					oninput="prettierCreditCardInput()"
+				/>
+			</p>
+			<p>
+				過期時間：<input
+					class="paymentContainer__inputData"
+					type="tel"
+					required
+					inputmode="numeric"
+					pattern="\d*"
+					maxlength="7"
+					placeholder="MM / YY"
+				/>
+			</p>
+			<p>
+				驗證密碼：<input
+					class="paymentContainer__inputData"
+					type="tel"
+					required
+					inputmode="numeric"
+					pattern="\d*"
+					maxlength="4"
+					placeholder="CVC"
+					id="creditCard_password"
+				/>
+			</p>
+	</div>
+	<hr />
+	<div class="submitContainer">
+        <p class="submitContainer__totalPrice" id="total_price"></p>
+        <input class="submitContainer__button" type="submit" value="確認訂購並付款">
+    </form>
+    </div>
+	</div>
+</div>
+</div>
+{% endblock %} {% block script %}
+<script src="/static/booking.js"></script>
+{% endblock %}

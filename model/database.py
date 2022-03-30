@@ -1,13 +1,18 @@
 import mysql.connector
 from mysql.connector import pooling
+import os
+from dotenv import load_dotenv
+
+load_dotenv("./data/.env")
 
 poolname="mysqlpool"
-poolsize=3
+poolsize=10
+mysql_password = os.getenv("mysql_password")
 
 CONFIG={
    "host":'localhost', 
    "user":'root', 
-   "password":"password", 
+   "password":mysql_password, 
    "database":'travel',
 }
 db=mysql.connector.connect(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, auth_plugin='mysql_native_password',**CONFIG)
@@ -38,7 +43,7 @@ def queryOne(sql,val):
         if db:
             db.close()
             
-def alterData(sql,val):
+def uploadData(sql,val):
     try:
         db=connectionPool.get_connection()
         cursor = db.cursor()

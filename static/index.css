@@ -19,7 +19,7 @@ a:active {
 }
 .banner-content::before {
 	content: '';
-	background-image: url('/static/welcome1.png');
+	background-image: url('/static/images/welcome1.png');
 	position: absolute;
 	top: 0;
 	bottom: 0;
