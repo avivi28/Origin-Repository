@@ -36,7 +36,7 @@ function getBookingAPI() {
 				footer.style = 'padding-bottom: 806px';
 			} else {
 				function Timer() {
-					loadingTimer = setTimeout(showLoading, 1000);
+					setTimeout(showLoading, 1000);
 				}
 				Timer();
 				showData(Res);

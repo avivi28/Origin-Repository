@@ -12,7 +12,7 @@ function connectAttractionAPI(url) {
 			getDataFromID(Res);
 			showImg(indexValue);
 		})
-		.catch((error) => (data.innerHTML = '抱歉,出現錯誤QQ'));
+		.catch((error) => (data.innerHTML = '抱歉,出現錯誤'));
 }
 
 connectAttractionAPI();
