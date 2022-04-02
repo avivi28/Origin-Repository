@@ -49,6 +49,7 @@
 					inputmode="numeric"
 					name="phone_number"
 					required
+					onkeypress="return checkDigit(event)"
 				/>
 			</p>
 		<p class="contactContainer__remindText">
@@ -57,17 +58,18 @@
 	</div>
 	<hr />
 	<div class="paymentContainer">
-		<p class="paymentContainer__title">信用卡付款資訊</p>
+		<p id="creditCard_input" class="paymentContainer__title">信用卡付款資訊</p>
 			<p>
 				卡片號碼：<input
 					class="paymentContainer__inputData"
 					type="tel"
-					required
+					required pattern="(\d{4}\s?){4}" 
 					inputmode="numeric"
-					pattern="[0-9]+"
 					maxlength="19"
 					placeholder="**** **** **** ****"
-					oninput="prettierCreditCardInput()"
+					id="creditCard_number"
+					onkeypress="return checkDigit(event)"
+					autocomplete="off"
 				/>
 			</p>
 			<p>
@@ -79,6 +81,7 @@
 					pattern="\d*"
 					maxlength="7"
 					placeholder="MM / YY"
+					autocomplete="off"
 				/>
 			</p>
 			<p>
@@ -91,8 +94,11 @@
 					maxlength="4"
 					placeholder="CVC"
 					id="creditCard_password"
+					onkeypress="return checkDigit(event)"
+					autocomplete="off"
 				/>
 			</p>
+		</p>
 	</div>
 	<hr />
 	<div class="submitContainer">

@@ -1,9 +1,26 @@
-// function prettierCreditCardInput() {
-// 	// this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-// 	// return this.value.replace(
-// 	// 	value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ')
-// 	// );
-// }
+function checkDigit(event) {
+	let code = event.which ? event.which : event.keyCode;
+	if ((code < 48 || code > 57) && code > 31) {
+		return false; //cannot enter a-z
+	}
+	return true;
+}
+
+let creditCardNumber = document.getElementById('creditCard_number');
+creditCardNumber.addEventListener('keydown', function (e) {
+	// console.log(e.keyCode);
+	if (e.keyCode !== 8) {
+		//8: backspace
+		console.log(this.value.length);
+		if (
+			this.value.length === 4 ||
+			this.value.length === 9 ||
+			this.value.length === 14
+		) {
+			this.value = this.value += ' ';
+		}
+	}
+});
 
 //---------Verify the user status------
 let bookingCookie = document.cookie;
@@ -28,7 +45,6 @@ function getBookingAPI() {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
-			console.log(Res);
 			const getData = Res['data'];
 			if (getData == null) {
 				bookingBody.textContent = '目前沒有任何待預訂的行程';
@@ -52,7 +68,6 @@ getBookingAPI();
 function showData(Res) {
 	const returnData = Res['data'];
 	let attractionData = returnData['attraction'];
-	console.log(attractionData);
 
 	let attractionImage = document.getElementById('attraction_image');
 	attractionImage.src = attractionData['image'];
