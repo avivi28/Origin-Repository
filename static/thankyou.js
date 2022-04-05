@@ -9,3 +9,13 @@ orderPlaceholder.textContent = '訂單編號： ' + orderNumber;
 function backHome() {
 	location.href = '/';
 }
+
+let bookingCookie = document.cookie;
+
+function verifyUser() {
+	if (bookingCookie == '') {
+		location.href = '/';
+	}
+}
+
+verifyUser();
