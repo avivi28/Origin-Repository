@@ -28,3 +28,27 @@ price int not null,
 FOREIGN KEY (attraction_id) REFERENCES attractions(id),
 FOREIGN KEY (user_id) REFERENCES member(id)
 );
+
+CREATE TABLE orders (
+id bigint not null primary key,
+price int not null,
+date date not null,
+time varchar(255) not null,
+payment_status varchar(255) not null,
+attraction_id bigint not null,
+user_id bigint not null,
+FOREIGN KEY (attraction_id) REFERENCES attractions(id),
+FOREIGN KEY (user_id) REFERENCES member(id)
+);
+
+CREATE TABLE payment (
+id bigint auto_increment not null primary key,
+order_number bigint not null,
+status int not null,
+price int not null,
+attraction_id bigint not null,
+user_id bigint not null,
+FOREIGN KEY (attraction_id) REFERENCES attractions(id),
+FOREIGN KEY (user_id) REFERENCES member(id),
+FOREIGN KEY (order_number) REFERENCES orders(id)
+);

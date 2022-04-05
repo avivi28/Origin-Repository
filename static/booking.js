@@ -297,7 +297,11 @@ function onClick() {
 		})
 			.then((Res) => Res.json())
 			.then((Res) => {
-				console.log(Res);
+				resData = Res['data'];
+				if (resData != null) {
+					location.href = '/thankyou';
+					deleteBooking();
+				}
 			})
 			.catch((error) => console.log(error));
 	}
