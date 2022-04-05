@@ -1,8 +1,13 @@
+from distutils.log import error
 from flask import *
 from model.database import uploadData
 import requests
 import jwt
 import time
+import os
+from dotenv import load_dotenv
+
+load_dotenv("./data/.env")
 
 true = True
 false = False
@@ -28,14 +33,14 @@ class ordersModel:
             input_attractionId = attraction_data["attraction"]["id"]
 
             headers = {
-                'x-api-key': 'partner_74Q0eA51ATQu8DnNqcbz5lD1iHIFpjGR2aTtsvpGTfHcCTebkyw1lXvD',
+                'x-api-key': os.getenv("parent_key"),
                 'Content-Type': 'application/json',
             }
 
             prime_data = {
                 "prime": input_prime,
-                "partner_key": "partner_74Q0eA51ATQu8DnNqcbz5lD1iHIFpjGR2aTtsvpGTfHcCTebkyw1lXvD",
-                "merchant_id": "BearPawCompany_ESUN",
+                "partner_key": os.getenv("parent_key"),
+                "merchant_id": os.getenv("merchant_id"),
                 "details":"TapPay Test",
                 "amount": input_amount,
                 "cardholder": {
@@ -43,7 +48,6 @@ class ordersModel:
                     "name": input_name,
                     "email": input_email,
                 },
-                "remember": false
             }
 
             token= request.cookies.get('token')
@@ -51,12 +55,11 @@ class ordersModel:
                 tokenData= jwt.decode(token, options={"verify_signature": False})
                 input_userId = tokenData['id']
 
-                sql = "INSERT INTO orders (id, price, date, time, payment_status, attraction_id, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                sql = "INSERT INTO orders (payment_number, price, date, time, payment_status, attraction_id, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s)"
                 val = (order_number, input_amount, input_date, input_time, "未付款", input_attractionId, input_userId, )
                 uploadData(sql,val)
                 
                 prime_response = requests.post("https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime", headers = headers, data = json.dumps(prime_data)).json() #get the json content & convert into dictionary
-
                 prime_status = prime_response["status"]
                 prime_msg = prime_response["msg"]
 
@@ -71,10 +74,11 @@ class ordersModel:
                 }
 
                 if prime_status == 0:
-                    uploadData("UPDATE orders SET payment_status = %s WHERE id = %s", ('已付款', order_number,))
+                    uploadData("UPDATE orders SET payment_status = %s WHERE payment_number = %s", ('已付款', order_number,))
                     payment_sql = "INSERT INTO payment (order_number, status, price, attraction_id, user_id) VALUES (%s, %s, %s, %s, %s)"
                     payment_val = (order_number, prime_status, input_amount, input_attractionId, input_userId, )
                     uploadData(payment_sql, payment_val)
+                    print (return_TapPaymessage)
 
                     return return_TapPaymessage, 200
                 else:
@@ -89,10 +93,10 @@ class ordersModel:
                     "message": "未登入系統，拒絕存取"
                 }
                 return login_error, 403
-        except:
+        except Exception as e:
             server_error={
                     "error":true,
-                    "message":"伺服器內部錯誤",
+                    "message":"伺服器內部錯誤"
                 }
             return server_error, 500
 

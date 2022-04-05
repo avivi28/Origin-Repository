@@ -303,6 +303,10 @@ function onClick() {
 					console.log(orderNumber);
 					location.href = '/thankyou?number=' + orderNumber;
 					deleteBooking();
+				} else {
+					returnMessage.textContent = '付款錯誤，請重新嘗試!';
+					returnMessage.style.display = 'block';
+					returnMessage.style.color = 'red';
 				}
 			})
 			.catch((error) => console.log(error));
