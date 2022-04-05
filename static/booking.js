@@ -164,14 +164,14 @@ TPDirect.card.setup({
 		input: {
 			color: 'gray',
 		},
-		'input.cvc': {
-			'font-size': '12px',
+		'input.ccv': {
+			'font-size': '16px',
 		},
 		'input.expiration-date': {
-			'font-size': '12px',
+			'font-size': '16px',
 		},
 		'input.card-number': {
-			'font-size': '12px',
+			'font-size': '16px',
 		},
 		'.valid': {
 			color: 'green',
@@ -300,9 +300,8 @@ function onClick() {
 				resData = Res['data'];
 				orderNumber = Res['data']['number'];
 				if (resData != null) {
-					console.log(orderNumber);
-					location.href = '/thankyou?number=' + orderNumber;
 					deleteBooking();
+					location.href = '/thankyou?number=' + orderNumber;
 				} else {
 					returnMessage.textContent = '付款錯誤，請重新嘗試!';
 					returnMessage.style.display = 'block';
