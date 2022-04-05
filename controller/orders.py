@@ -3,6 +3,16 @@ from model.orders import orders_model
 
 orders_api=Blueprint("orders",__name__)
 
+@orders_api.route("/api/order/<orderNumber>")
+def get(orderNumber):
+    return_result = orders_model.getorders(orderNumber)
+    get_result = return_result[0]
+    get_status= return_result[1]
+    if get_status == 200:
+        return jsonify(get_result)
+    else:
+        return jsonify(get_result), 403
+
 @orders_api.route("/api/orders", methods=['POST'])
 def post():
     return_result = orders_model.postorders()
