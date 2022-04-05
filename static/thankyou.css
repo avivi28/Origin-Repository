@@ -3,6 +3,9 @@ body {
 	margin: 0px;
 	padding: 0px;
 	overflow-x: hidden;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 * {
 	box-sizing: border-box;
@@ -61,7 +64,7 @@ footer {
 	background: #757575;
 	bottom: 0px;
 	width: 100%;
-	margin-top: 55px;
+	margin-top: auto;
 }
 .bodyContainer {
 	max-width: 1200px;
