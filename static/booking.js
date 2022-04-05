@@ -285,6 +285,7 @@ function onClick() {
 				},
 			},
 		};
+		console.log(primeData);
 
 		fetch('/api/orders', {
 			method: 'POST',
@@ -292,6 +293,7 @@ function onClick() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(primeData),
+			credentials: 'same-origin',
 		})
 			.then((Res) => Res.json())
 			.then((Res) => {
