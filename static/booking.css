@@ -72,6 +72,7 @@ input {
 	font-size: 19px;
 	margin-bottom: 62px;
 	border: none;
+	cursor: pointer;
 }
 .submitContainer__totalPrice {
 	margin: 43px 0px 25px;

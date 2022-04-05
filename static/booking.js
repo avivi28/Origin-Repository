@@ -285,7 +285,6 @@ function onClick() {
 				},
 			},
 		};
-		console.log(primeData);
 
 		fetch('/api/orders', {
 			method: 'POST',
@@ -297,9 +296,12 @@ function onClick() {
 		})
 			.then((Res) => Res.json())
 			.then((Res) => {
+				console.log(Res);
 				resData = Res['data'];
+				orderNumber = Res['data']['number'];
 				if (resData != null) {
-					location.href = '/thankyou';
+					console.log(orderNumber);
+					location.href = '/thankyou?number=' + orderNumber;
 					deleteBooking();
 				}
 			})
