@@ -71,6 +71,7 @@ input {
 	font-weight: 400;
 	font-size: 19px;
 	margin-bottom: 62px;
+	border: none;
 }
 .submitContainer__totalPrice {
 	margin: 43px 0px 25px;
@@ -136,8 +137,30 @@ footer {
 	-webkit-animation: spin 2s linear infinite; /* Safari */
 	animation: spin 2s linear infinite;
 }
-#creditCard_password {
+.paymentContainer__details {
+	display: flex;
+	margin-bottom: 15px;
+}
+.tpfield {
+	width: 200px;
+	height: 38px;
+	border: 1px solid #e8e8e8;
+	padding: 10px;
+	border-radius: 5px;
+}
+#card-ccv {
 	margin-bottom: 40px;
+}
+#return_message {
+	margin-bottom: 20px;
+}
+.tick {
+	margin-left: 5px;
+	color: green;
+}
+.cross {
+	margin-left: 5px;
+	color: red;
 }
 /* Safari */
 @-webkit-keyframes spin {

@@ -6,22 +6,6 @@ function checkDigit(event) {
 	return true;
 }
 
-let creditCardNumber = document.getElementById('creditCard_number');
-creditCardNumber.addEventListener('keydown', function (e) {
-	// console.log(e.keyCode);
-	if (e.keyCode !== 8) {
-		//8: backspace
-		console.log(this.value.length);
-		if (
-			this.value.length === 4 ||
-			this.value.length === 9 ||
-			this.value.length === 14
-		) {
-			this.value = this.value += ' ';
-		}
-	}
-});
-
 //---------Verify the user status------
 let bookingCookie = document.cookie;
 
@@ -37,6 +21,7 @@ verifyUser();
 const bookingAPIUrl = '/api/booking';
 let bookingBody = document.getElementById('entire_information');
 let footer = document.querySelector('footer');
+let orderedData;
 
 function getBookingAPI() {
 	fetch(bookingAPIUrl, {
@@ -45,8 +30,8 @@ function getBookingAPI() {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
-			const getData = Res['data'];
-			if (getData == null) {
+			orderedData = Res['data'];
+			if (orderedData == null) {
 				bookingBody.textContent = '目前沒有任何待預訂的行程';
 				bookingBody.style = 'margin: 35px 0px 40px';
 				footer.style = 'padding-bottom: 806px';
@@ -65,6 +50,7 @@ function getBookingAPI() {
 getBookingAPI();
 
 //------------show the data after connected get API------------
+let convertedDate;
 function showData(Res) {
 	const returnData = Res['data'];
 	let attractionData = returnData['attraction'];
@@ -144,4 +130,173 @@ let loadingImage = document.getElementById('loader');
 function showLoading() {
 	document.getElementById('loader').style.display = 'none';
 	document.getElementById('attraction_image').style.display = 'block';
+}
+
+//---------Connect TapPay Frontend--------
+TPDirect.setupSDK(
+	// 設置好等等 GetPrime 所需要的金鑰
+	124004,
+	'app_RRWnuNSgOB8XTulbmwnfWKznImPCXant2F5L3R8jSe8OX6tiTDoMVOk2p65T',
+	'sandbox'
+);
+
+let cardViewContainer = document.getElementById('cardview-container');
+
+const fields = {
+	number: {
+		element: document.getElementById('card-number'),
+		placeholder: '**** **** **** ****',
+	},
+	expirationDate: {
+		element: document.getElementById('card-expiration-date'),
+		placeholder: 'MM / YY',
+	},
+	ccv: {
+		element: document.getElementById('card-ccv'),
+		placeholder: 'ccv',
+	},
+};
+
+// 把 TapPay 內建style給植入到 div 中
+TPDirect.card.setup({
+	fields: fields,
+	styles: {
+		input: {
+			color: 'gray',
+		},
+		'input.cvc': {
+			'font-size': '12px',
+		},
+		'input.expiration-date': {
+			'font-size': '12px',
+		},
+		'input.card-number': {
+			'font-size': '12px',
+		},
+		'.valid': {
+			color: 'green',
+		},
+		'.invalid': {
+			color: 'red',
+		},
+		'@media screen and (max-width: 400px)': {
+			input: {
+				color: 'orange',
+			},
+		},
+	},
+});
+
+let numberTick = document.getElementById('number_tick');
+let numberCross = document.getElementById('number_cross');
+
+let expiryTick = document.getElementById('expiry_tick');
+let expiryCross = document.getElementById('expiry_cross');
+
+let ccvTick = document.getElementById('ccv_tick');
+let ccvCross = document.getElementById('ccv_cross');
+
+TPDirect.card.onUpdate(function (update) {
+	// number 欄位是錯誤的
+	if (update.status.number === 2) {
+		numberCross.style.display = 'block';
+		numberTick.style.display = 'none';
+	} else if (update.status.number === 0) {
+		numberCross.style.display = 'none';
+		numberTick.style.display = 'block';
+	} else {
+		numberCross.style.display = 'none';
+		numberTick.style.display = 'none';
+	}
+
+	if (update.status.expiry === 2) {
+		expiryCross.style.display = 'block';
+		expiryTick.style.display = 'none';
+	} else if (update.status.expiry === 0) {
+		expiryCross.style.display = 'none';
+		expiryTick.style.display = 'block';
+	} else {
+		expiryCross.style.display = 'none';
+		expiryTick.style.display = 'none';
+	}
+
+	if (update.status.ccv === 2) {
+		ccvCross.style.display = 'block';
+		ccvTick.style.display = 'none';
+	} else if (update.status.ccv === 0) {
+		ccvCross.style.display = 'none';
+		ccvTick.style.display = 'block';
+	} else {
+		ccvCross.style.display = 'none';
+		ccvTick.style.display = 'none';
+	}
+});
+
+// 讓 button click 之後觸發 getPrime 方法
+let returnMessage = document.getElementById('return_message');
+
+function onClick() {
+	// 取得 TapPay Fields 的 status
+	const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+	let phoneNumberInput = document.getElementById('phone_number').value;
+
+	// fail to getPrime
+	if (tappayStatus.canGetPrime === false) {
+		returnMessage.textContent = '請確認付款資訊是否輸入正確!';
+		returnMessage.style.display = 'block';
+		returnMessage.style.color = 'red';
+		return;
+	}
+
+	// Get prime
+	TPDirect.card.getPrime((result) => {
+		if (phoneNumberInput == null) {
+			returnMessage.textContent = '請確認手機號碼是否輸入正確!';
+			returnMessage.style.display = 'block';
+			returnMessage.style.color = 'red';
+			return;
+		}
+		if (result.status !== 0) {
+			returnMessage.textContent = '錯誤訊息:' + result.msg;
+			returnMessage.style.display = 'block';
+			returnMessage.style.color = 'red';
+			return;
+		}
+
+		let prime = result.card.prime;
+		submitPrime(prime);
+	});
+
+	//---------send prime to backend-----------
+	function submitPrime(prime) {
+		let primeData = {
+			prime: prime,
+			order: {
+				price: orderedData['price'],
+				trip: {
+					attraction: orderedData['attraction'],
+					date: convertedDate,
+					time: orderedData['time'],
+				},
+				contact: {
+					name: userName,
+					email: userEmail,
+					phone: phoneNumberInput,
+				},
+			},
+		};
+
+		fetch('/api/orders', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(primeData),
+		})
+			.then((Res) => Res.json())
+			.then((Res) => {
+				console.log(Res);
+			})
+			.catch((error) => console.log(error));
+	}
 }
