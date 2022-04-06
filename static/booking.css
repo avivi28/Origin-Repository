@@ -60,6 +60,7 @@ input {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
+	position: relative;
 }
 .submitContainer__button {
 	background: #448899;
@@ -71,6 +72,8 @@ input {
 	font-weight: 400;
 	font-size: 19px;
 	margin-bottom: 62px;
+	border: none;
+	cursor: pointer;
 }
 .submitContainer__totalPrice {
 	margin: 43px 0px 25px;
@@ -133,10 +136,56 @@ footer {
 	border: 16px solid #f3f3f3;
 	border-radius: 50%;
 	border-top: 16px solid #448899;
+	-webkit-animation: spin 2s linear infinite; /* Safari */
 	animation: spin 2s linear infinite;
 }
-#creditCard_password {
+#connecting_loader {
+	display: none;
+	position: absolute;
+	bottom: 50px;
+	right: 220px;
+	z-index: 1;
+	width: 120px;
+	height: 120px;
+	border: 16px solid #f3f3f3;
+	border-radius: 50%;
+	border-top: 16px solid #448899;
+	-webkit-animation: spin 2s linear infinite; /* Safari */
+	animation: spin 2s linear infinite;
+}
+.paymentContainer__details {
+	display: flex;
+	margin-bottom: 15px;
+}
+.tpfield {
+	width: 200px;
+	height: 38px;
+	border: 1px solid #e8e8e8;
+	padding: 10px;
+	border-radius: 5px;
+}
+#card-ccv {
 	margin-bottom: 40px;
+}
+#return_message {
+	margin-bottom: 20px;
+}
+.tick {
+	margin-left: 5px;
+	color: green;
+}
+.cross {
+	margin-left: 5px;
+	color: red;
+}
+/* Safari */
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
 }
 @keyframes spin {
 	0% {
