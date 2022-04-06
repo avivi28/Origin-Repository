@@ -41,7 +41,7 @@ function getBookingAPI() {
 				}
 				Timer();
 				showData(Res);
-				showUserDate();
+				showUserData();
 			}
 		})
 		.catch((error) => console.log(error));
@@ -101,11 +101,9 @@ userEmail = userData['email'];
 titleName.textContent = '您好，' + userName + '，待預訂的行程如下：';
 
 //----------show User info by using data in JWT-------
-function showUserDate() {
-	let contactName = document.getElementById('contact_name');
-	contactName.setAttribute('value', userName);
-	let contactEmail = document.getElementById('contact_email');
-	contactEmail.setAttribute('value', userEmail);
+function showUserData() {
+	document.getElementById('contact_name').setAttribute('value', userName);
+	document.getElementById('contact_email').setAttribute('value', userEmail);
 }
 
 //-----------delete the selected booking--------------
@@ -323,7 +321,10 @@ function successBooking() {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
-			location.href = '/thankyou?number=' + orderNumber;
+			deleteData = Res['ok'];
+			if (deleteData == true) {
+				location.href = '/thankyou?number=' + orderNumber;
+			}
 		})
 		.catch((error) => console.log(error));
 }
