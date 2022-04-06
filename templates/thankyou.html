@@ -7,8 +7,11 @@
 		<img src="../static/images/check-circle.svg" />
 	</div>
 	<div class="order_number" id="order_number">訂單編號：</div>
-	<div>請記住此編號，或到會員中心查詢歷史訂單</div>
-	<button id="continue_plan" onclick="backHome()">計畫其他行程</button>
+	<div>請記住此編號，或點擊下載訂單編號</div>
+	<div class="buttonContainer">
+		<button id="continue_plan" onclick="backHome()">計畫其他行程</button>
+		<button id="print_button" onclick="window.print()">下載訂單編號</button>
+	</div>
 </div>
 {% endblock %} {% block script %}
 <script src="../static/thankyou.js"></script>

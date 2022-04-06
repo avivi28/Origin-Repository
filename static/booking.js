@@ -125,11 +125,14 @@ function deleteBooking() {
 }
 
 //--------loading effect-----------
-let loadingImage = document.getElementById('loader');
 
 function showLoading() {
 	document.getElementById('loader').style.display = 'none';
 	document.getElementById('attraction_image').style.display = 'block';
+}
+
+function showConnecting() {
+	document.getElementById('connecting_loader').style.display = 'block';
 }
 
 //---------Connect TapPay Frontend--------
@@ -236,6 +239,8 @@ TPDirect.card.onUpdate(function (update) {
 let returnMessage = document.getElementById('return_message');
 
 function onClick() {
+	showConnecting();
+
 	// 取得 TapPay Fields 的 status
 	const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 	let phoneNumberInput = document.getElementById('phone_number').value;
@@ -300,8 +305,7 @@ function onClick() {
 				resData = Res['data'];
 				orderNumber = Res['data']['number'];
 				if (resData != null) {
-					deleteBooking();
-					location.href = '/thankyou?number=' + orderNumber;
+					successBooking();
 				} else {
 					returnMessage.textContent = '付款錯誤，請重新嘗試!';
 					returnMessage.style.display = 'block';
@@ -310,4 +314,16 @@ function onClick() {
 			})
 			.catch((error) => console.log(error));
 	}
+}
+
+function successBooking() {
+	fetch(bookingAPIUrl, {
+		method: 'DELETE',
+		credentials: 'same-origin',
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			location.href = '/thankyou?number=' + orderNumber;
+		})
+		.catch((error) => console.log(error));
 }
