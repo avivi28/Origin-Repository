@@ -24,6 +24,8 @@ def queryAll(sql,val):
         cursor = db.cursor()
         cursor.execute(sql,val)
         return cursor.fetchall()
+    except:
+        db.rollback() #if any errors, undo all data changes
     finally:
         if db.is_connected():
             cursor.close()
@@ -36,6 +38,8 @@ def queryOne(sql,val):
         cursor = db.cursor()
         cursor.execute(sql,val)
         return cursor.fetchone()
+    except:
+        db.rollback()
     finally:
         if db.is_connected():
             cursor.close()
@@ -49,6 +53,8 @@ def uploadData(sql,val):
         cursor.execute(sql,val)
         db.commit()
         return cursor.fetchone()
+    except:
+        db.rollback()
     finally:
         if db.is_connected():
             cursor.close()
