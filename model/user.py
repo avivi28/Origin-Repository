@@ -31,14 +31,14 @@ class UserModel:
             input_email=json_data['email']
             input_password=json_data['password']
             data=queryOne("SELECT * FROM member WHERE email = %s", (input_email, ))
-            hashed_password=data[3]
+            hashed_password=data['password']
             checked_password= check_password_hash(hashed_password, input_password) # compare hashed_password with input_password
             if data is not None:
                 if checked_password is True:
                     payload_data={
-                        "id":data[0],
-                        "name":data[1],
-                        "email":data[2]
+                        "id":data['member_id'],
+                        "name":data['name'],
+                        "email":data['email']
                     }
                     token=jwt.encode(
                         payload=payload_data,

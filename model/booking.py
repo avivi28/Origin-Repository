@@ -11,23 +11,23 @@ class bookingModel:
         if token is not None:
             tokenData = jwt.decode(token, options={"verify_signature": False})
             token_userId = tokenData["id"]
-            booking_data = queryOne("SELECT * FROM booking WHERE user_id = %s ORDER BY id DESC LIMIT 1", (token_userId, ))
+            booking_data = queryOne("SELECT * FROM booking WHERE user_id = %s ORDER BY booking_id DESC LIMIT 1", (token_userId, ))
             if booking_data is not None:
-                attraction_id = booking_data[1]
-                attraction_data = queryOne("SELECT * FROM attractions WHERE id = %s", (attraction_id, ))
-                image_data=attraction_data[9].split(',')[0]
-                image_data=image_data.replace("[","").replace("'","",2)
+                attraction_id = booking_data['attraction_id']
+                attraction_data = queryOne("SELECT * FROM attractions WHERE attractions_id = %s", (attraction_id, ))
+                image_data=attraction_data['images'].split(',')[0].replace("[","").replace("'","",2)
+
                 get_success = {
                     "data": {
                         "attraction": {
                             "id": attraction_id,
-                            "name": attraction_data[1],
-                            "address": attraction_data[4],
+                            "name": attraction_data['attractions_name'],
+                            "address": attraction_data['address'],
                             "image": image_data
                         },
-                        "date": booking_data[3],
-                        "time": booking_data[4],
-                        "price": booking_data[5]
+                        "date": booking_data['booking_date'],
+                        "time": booking_data['booking_time'],
+                        "price": booking_data['price']
                     }
                 }
                 return get_success, 200
@@ -54,7 +54,7 @@ class bookingModel:
             token_userId = tokenData["id"]
 
             if token is not None:
-                uploadData("INSERT INTO booking (attraction_id, user_id, date, time, price) VALUES (%s, %s, %s, %s, %s)", (input_attractionId, token_userId, input_date, input_time, input_price, ))
+                uploadData("INSERT INTO booking (attraction_id, user_id, booking_date, booking_time, price) VALUES (%s, %s, %s, %s, %s)", (input_attractionId, token_userId, input_date, input_time, input_price, ))
                 booking_succes = {
                     "ok": true
                 }

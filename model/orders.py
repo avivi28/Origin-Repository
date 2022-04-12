@@ -17,28 +17,28 @@ class ordersModel:
         token= request.cookies.get('token')
         if token is not None:
             order_number = str(orderNumber)
-            order_data = queryOne("SELECT * FROM orders INNER JOIN member ON orders.user_id = member.id INNER JOIN attractions ON orders.attraction_id = attractions.id WHERE orders.payment_number = %s", (order_number, ))
-            image_data = order_data[22]
+            order_data = queryOne("SELECT * FROM orders INNER JOIN member ON orders.user_id = member.member_id INNER JOIN attractions ON orders.attraction_id = attractions.attractions_id WHERE orders.payment_number = %s", (order_number, ))
+            image_data = order_data['images']
             return_order_number = {
                 "data": {
                     "number": order_number,
-                    "price": order_data[2],
+                    "price": order_data['price'],
                     "trip": {
                     "attraction": {
-                        "id": order_data[7],
-                        "name": order_data[14],
-                        "address": order_data[17],
+                        "id": order_data['attractions_id'],
+                        "name": order_data['attractions_name'],
+                        "address": order_data['address'],
                         "image": image_data.replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")[0]
                     },
-                    "date": order_data[3],
-                    "time": order_data[4]
+                    "date": order_data['orders_date'],
+                    "time": order_data['orders_time']
                     },
                     "contact": {
-                    "name": order_data[10],
-                    "email": order_data[11],
-                    "phone": order_data[6]
+                    "name": order_data['name'],
+                    "email": order_data['email'],
+                    "phone": order_data['user_phone']
                     },
-                    "status": order_data[5],
+                    "status": order_data['payment_status'],
                 }
             }
             return return_order_number, 200
@@ -87,7 +87,7 @@ class ordersModel:
                 tokenData= jwt.decode(token, options={"verify_signature": False})
                 input_userId = tokenData['id']
 
-                sql = "INSERT INTO orders (payment_number, price, date, time, payment_status, user_phone, attraction_id, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+                sql = "INSERT INTO orders (payment_number, price, orders_date, orders_time, payment_status, user_phone, attraction_id, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
                 val = (order_number, input_amount, input_date, input_time, 1, input_phone, input_attractionId, input_userId, )
                 uploadData(sql,val)
                 

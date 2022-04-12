@@ -99,30 +99,21 @@ class AttractionModel:
     def getId(self,attractionId):
         try:
             attractionId=int(attractionId)
-            Id_data=queryOne("SELECT * FROM attractions WHERE id = %s", (attractionId,))
+            Id_data=queryOne("SELECT * FROM attractions WHERE attractions_id = %s", (attractionId,))
 
-            id=Id_data[0]
-            name=Id_data[1]
-            category=Id_data[2]
-            description=Id_data[3]
-            address=Id_data[4]
-            transport=Id_data[5]
-            mrt=Id_data[6]
-            latitude=Id_data[7]
-            longitude=Id_data[8]
-            images_data=Id_data[9].replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")
+            images_data=Id_data['images'].replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")
 
             success_idData_return={
                 "data": {
-                    "id": id,
-                    "name": name,
-                    "category": category,
-                    "description": description,
-                    "address": address,
-                    "transport": transport,
-                    "mrt": mrt,
-                    "latitude": latitude,
-                    "longitude": longitude,
+                    "id": Id_data['attractions_id'],
+                    "name": Id_data['attractions_name'],
+                    "category": Id_data['category'],
+                    "description": Id_data['description'],
+                    "address": Id_data['address'],
+                    "transport": Id_data['transport'],
+                    "mrt": Id_data['mrt'],
+                    "latitude": Id_data['latitude'],
+                    "longitude": Id_data['longitude'],
                     "images": images_data
                     }
                 }

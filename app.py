@@ -1,6 +1,5 @@
 from flask import *
 from controller.attraction import attractions_api
-# from controller.id import id_api
 from controller.user import user_api
 from controller.booking import booking_api
 from controller.orders import orders_api
@@ -13,8 +12,7 @@ app.config["JSON_SORT_KEYS"] = False
 
 bcrypt = Bcrypt(app)
 
-app.register_blueprint(attractions_api)     
-# app.register_blueprint(id_api)      
+app.register_blueprint(attractions_api)          
 app.register_blueprint(user_api)
 app.register_blueprint(booking_api)
 app.register_blueprint(orders_api)

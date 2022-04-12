@@ -35,7 +35,7 @@ def queryAll(sql,val):
 def queryOne(sql,val):
     try:
         db=connectionPool.get_connection()
-        cursor = db.cursor()
+        cursor = db.cursor(dictionary=True)
         cursor.execute(sql,val)
         return cursor.fetchone()
     except:
