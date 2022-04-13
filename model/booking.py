@@ -1,6 +1,7 @@
 from flask import *
 from model.database import query_one, upload_data
 import jwt
+import re
 
 true = True
 null = None
@@ -45,23 +46,33 @@ class bookingModel:
             input_date = json_data["date"]
             input_time = json_data["time"]
             input_price = json_data["price"]
-            token= request.cookies.get('token')
-            tokenData = jwt.decode(token, options={"verify_signature": False})
-            token_userId = tokenData["id"]
 
-            if token is not None:
-                upload_data("INSERT INTO booking (attraction_id, user_id, booking_date, booking_time, price) VALUES (%s, %s, %s, %s, %s)", (input_attractionId, token_userId, input_date, input_time, input_price, ))
-                return {"ok": true}, 200
-            elif token is None:
-                return {
-                    "error": true,
-                    "message": "未登入系統，拒絕存取"
-                }, 403
+            input_date_check = re.search("[0-9|-]", input_date)
+            input_time_check = re.search("[\u4e00-\u9fff|0-9]", input_date)
+
+            if input_date_check and input_time_check:
+                token= request.cookies.get('token')
+                tokenData = jwt.decode(token, options={"verify_signature": False})
+                token_userId = tokenData["id"]
+
+                if token is not None:
+                    upload_data("INSERT INTO booking (attraction_id, user_id, booking_date, booking_time, price) VALUES (%s, %s, %s, %s, %s)", (input_attractionId, token_userId, input_date, input_time, input_price, ))
+                    return {"ok": true}, 200
+                elif token is None:
+                    return {
+                        "error": true,
+                        "message": "未登入系統，拒絕存取"
+                    }, 403
+                else:
+                    return {
+                        "error": true,
+                        "message": "建立失敗，輸入不正確或其他原因"
+                    }, 400
             else:
-                return {
-                    "error": true,
-                    "message": "建立失敗，輸入不正確或其他原因"
-                }, 400
+                return  {
+                "error":true,
+                "message":"資料格式錯誤",
+            }, 400
         except:   
             return {
                     "error":true,
