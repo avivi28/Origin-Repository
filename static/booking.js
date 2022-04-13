@@ -24,6 +24,7 @@ let footer = document.querySelector('footer');
 let orderedData;
 
 function getBookingAPI() {
+	showLoading();
 	fetch(bookingAPIUrl, {
 		method: 'GET',
 		credentials: 'same-origin',
@@ -36,10 +37,6 @@ function getBookingAPI() {
 				bookingBody.style = 'margin: 35px 0px 40px';
 				footer.style = 'padding-bottom: 806px';
 			} else {
-				function Timer() {
-					setTimeout(showLoading, 1000);
-				}
-				Timer();
 				showData(Res);
 				showUserData();
 			}
