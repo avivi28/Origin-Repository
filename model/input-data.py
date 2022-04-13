@@ -1,7 +1,5 @@
-from audioop import add
 import json
-import mysql.connector
-from mysql.connector import pooling
+import mysql.connector.pooling
 
 poolname="mysqlpool"
 poolsize=3

@@ -12,7 +12,7 @@ true = True
 false = False
 
 class ordersModel:
-    def getorders(self, orderNumber):
+    def get_orders(self, orderNumber):
         token= request.cookies.get('token')
         if token is not None:
             order_number = str(orderNumber)
@@ -44,7 +44,7 @@ class ordersModel:
         else:
             return {"error": true, "message": "未登入系統，拒絕存取"}, 403
     
-    def postorders(self):
+    def post_orders(self):
         try:
             local_time = str(time.strftime('%Y%m%D%H%M%S', time.localtime(time.time())).replace('/','')+str(time.time()).replace(',','')[-7:])
             order_number = local_time

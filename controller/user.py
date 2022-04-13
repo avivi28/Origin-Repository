@@ -6,7 +6,7 @@ user_api=Blueprint("user",__name__)
 @user_api.route("/api/user", methods=['GET','POST','PATCH','DELETE'])
 def get():
     if request.method == 'GET':
-        get_result = user_model.getUser()
+        get_result = user_model.get_user()
         return jsonify(get_result)
     
     elif request.method == 'POST':
@@ -21,7 +21,7 @@ def get():
             return jsonify(post_result), 500
         
     elif request.method == 'PATCH':
-        patch_result = user_model.signIn()
+        patch_result = user_model.sign_in()
         json_result = patch_result[0]
         signin_status = patch_result[1]
         if signin_status == 200:
@@ -35,7 +35,7 @@ def get():
             return jsonify(json_result), 500
     
     elif request.method == 'DELETE':
-        delete_result = user_model.logOut()
+        delete_result = user_model.log_out()
         resp=make_response(jsonify(delete_result))
         resp.set_cookie(key="token", value='', expires=0)
         return resp

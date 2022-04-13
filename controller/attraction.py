@@ -4,7 +4,7 @@ from model.attraction import attraction_model
 attractions_api=Blueprint("attractions",__name__)
 
 @attractions_api.route("/api/attractions")
-def getAttractionData():
+def get_attraction_data():
     result = attraction_model.get()
     if result == None:
         error_message = result
@@ -14,7 +14,7 @@ def getAttractionData():
         return jsonify(success_data_return)
 
 @attractions_api.route("/api/attraction/<attractionId>") #this is path parameter
-def getDataById(attractionId):
+def get_data_by_id(attractionId):
     result = attraction_model.getId(attractionId)
     try:
         return jsonify(result)

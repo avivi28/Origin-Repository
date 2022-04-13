@@ -12,7 +12,7 @@ null = None
 app.secret_key= os.getenv("secret_key")
 
 class UserModel:
-    def getUser(self):
+    def get_user(self):
         token= request.cookies.get('token')
         if token is not None:
             tokenData= jwt.decode(token, options={"verify_signature": False}) # options for JWT decode
@@ -25,7 +25,7 @@ class UserModel:
                 "data": null}
             return nullData
     
-    def signIn(self):
+    def sign_in(self):
         try:
             json_data=request.get_json()
             input_email=json_data['email']
@@ -88,7 +88,7 @@ class UserModel:
                 }
             return server_error, 500
         
-    def logOut(self):
+    def log_out(self):
         logout_success = {
                 "ok": true
                 }

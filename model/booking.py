@@ -6,7 +6,7 @@ true = True
 null = None
 
 class bookingModel:
-    def getbooking(self):
+    def get_booking(self):
         token = request.cookies.get('token')
         if token is not None:
             tokenData = jwt.decode(token, options={"verify_signature": False})
@@ -42,7 +42,7 @@ class bookingModel:
                 "message": "未登入系統，拒絕存取"
             }
             return logIn_error, 403
-    def postbooking(self):
+    def post_booking(self):
         try:
             json_data = request.get_json()
             input_attractionId = json_data["attractionId"]
@@ -79,7 +79,7 @@ class bookingModel:
                 }
             return server_error, 500
     
-    def deletebooking(self):
+    def delete_booking(self):
         token= request.cookies.get('token')
         tokenData = jwt.decode(token, options={"verify_signature": False})
         token_userId = tokenData["id"]

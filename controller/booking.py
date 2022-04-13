@@ -6,7 +6,7 @@ booking_api=Blueprint("booking",__name__)
 @booking_api.route("/api/booking", methods=['GET','POST','PATCH','DELETE'])
 def get():
     if request.method == 'GET':
-        return_result = booking_model.getbooking()
+        return_result = booking_model.get_booking()
         get_result = return_result[0]
         get_status = return_result[1]
         if get_status == 200:
@@ -16,7 +16,7 @@ def get():
 
     
     elif request.method == 'POST':
-        return_result = booking_model.postbooking()
+        return_result = booking_model.post_booking()
         post_result = return_result[0]
         post_status = return_result[1]
         if post_status == 200:
@@ -29,7 +29,7 @@ def get():
             return jsonify(post_result), 500
     
     elif request.method == 'DELETE':
-        return_result = booking_model.deletebooking()
+        return_result = booking_model.delete_booking()
         delete_result = return_result[0]
         delete_status = return_result[1]
         if delete_status == 200:
