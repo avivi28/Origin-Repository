@@ -4,6 +4,7 @@ import jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
 import os
 from dotenv import load_dotenv
+import re #Regex
 
 load_dotenv("./data/.env")
 
@@ -30,30 +31,37 @@ class UserModel:
             json_data=request.get_json()
             input_email=json_data['email']
             input_password=json_data['password']
-            data=query_one("SELECT * FROM member WHERE email = %s", (input_email, ))
-            hashed_password=data['password']
-            checked_password= check_password_hash(hashed_password, input_password) # compare hashed_password with input_password
-            if data is not None:
-                if checked_password is True:
-                    payload_data={
-                        "id":data['member_id'],
-                        "name":data['name'],
-                        "email":data['email']
-                    }
-                    token=jwt.encode(
-                        payload=payload_data,
-                        key=app.secret_key
-                    )
-                    sign_in_success={
-                        "ok": true
+            email_format_check = re.search("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$", input_email)
+            if email_format_check:
+                data=query_one("SELECT * FROM member WHERE email = %s", (input_email, ))
+                hashed_password=data['password']
+                checked_password= check_password_hash(hashed_password, input_password) # compare hashed_password with input_password
+                if data is not None:
+                    if checked_password is True:
+                        payload_data={
+                            "id":data['member_id'],
+                            "name":data['name'],
+                            "email":data['email']
                         }
-                    return sign_in_success, 200, token
+                        token=jwt.encode(
+                            payload=payload_data,
+                            key=app.secret_key
+                        )
+                        sign_in_success={
+                            "ok": true
+                            }
+                        return sign_in_success, 200, token
+                else:
+                    sign_in_fail={
+                        "error":true,
+                        "message":"登入失敗，帳號或密碼錯誤",
+                    }
+                    return sign_in_fail, 400
             else:
-                sign_in_fail={
-                    "error":true,
-                    "message":"登入失敗，帳號或密碼錯誤",
-                }
-                return sign_in_fail, 400
+                return {
+                "error":true,
+                "message":"資料格式錯誤",
+            }, 400
         except:
             server_error={
                     "error":true,
@@ -68,25 +76,32 @@ class UserModel:
             input_email = json_data["email"]
             input_password = json_data["password"]
             hashed_password = generate_password_hash(input_password)
-            data=query_one("SELECT * FROM member WHERE email = %s", (input_email, ))
-            if data is not None:
-                register_fail={
-                    "error":true,
-                    "message":"註冊失敗，重複的 Email",
-                }
-                return register_fail, 400
-            else:
-                upload_data("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (input_name, input_email, hashed_password, ))
-                register_success={
-                    "ok": true
+            email_format_check = re.search("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$", input_email)
+            name_format_check = re.search("[a-zA-Z0-9]", input_name) #prevent any special characters
+            if email_format_check and name_format_check:
+                data=query_one("SELECT * FROM member WHERE email = %s", (input_email, ))
+                if data is not None:
+                    register_fail={
+                        "error":true,
+                        "message":"註冊失敗，重複的 Email",
                     }
-            return register_success, 200
+                    return register_fail, 400
+                else:
+                    upload_data("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (input_name, input_email, hashed_password, ))
+                    register_success={
+                        "ok": true
+                    }
+                    return register_success, 200
+            else:
+                return  {
+                "error":true,
+                "message":"資料格式錯誤",
+            }, 400
         except:   
-            server_error={
+            return {
                     "error":true,
                     "message":"伺服器內部錯誤",
-                }
-            return server_error, 500
+                }, 500
         
     def log_out(self):
         logout_success = {

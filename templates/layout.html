@@ -40,7 +40,7 @@
                       <p class="close" id="close" onclick="closeModal()"></p>
                       <p class="modal-title">註冊會員帳號</p>
                       <form id="register_form" method="post">
-                          <input type="text" class="input_format" id="register_name" name="name" placeholder="輸入姓名" required></input>
+                          <input type="text" class="input_format" id="register_name" name="name" placeholder="輸入姓名" pattern="[a-zA-Z0-9]" required></input>
                           <input type="email" class="input_format" id="register_email" name="email" placeholder="輸入電子信箱" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required></input>
                           <input type="password" class="input_format" id="register_password" name="password" placeholder="輸入密碼" required></input>
                           <input type="submit" value="註冊新帳戶" class="modal-submit" id="register_button"></input>
