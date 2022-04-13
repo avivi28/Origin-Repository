@@ -1,5 +1,4 @@
-import mysql.connector
-from mysql.connector import pooling
+import mysql.connector.pooling
 import os
 from dotenv import load_dotenv
 
@@ -14,9 +13,10 @@ CONFIG={
    "password":os.getenv("mysql_password"), 
    "database":'travel',
 }
+
 db=mysql.connector.connect(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, auth_plugin='mysql_native_password',**CONFIG)
-connectionPool=mysql.connector.pooling.MySQLConnectionPool(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, auth_plugin='mysql_native_password',**CONFIG)
-db=connectionPool.get_connection()
+connectionPool=mysql.connector.pooling.MySQLConnectionPool(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, auth_plugin='mysql_native_password',**CONFIG) #connection pool
+db=connectionPool.get_connection() #get data from connection pool
 
 def queryAll(sql,val):
     try:
@@ -35,16 +35,16 @@ def queryAll(sql,val):
 def queryOne(sql,val):
     try:
         db=connectionPool.get_connection()
-        cursor = db.cursor(dictionary=True)
+        cursor = db.cursor(dictionary=True) 
         cursor.execute(sql,val)
         return cursor.fetchone()
-    except:
-        db.rollback()
+    except mysql.connector.Error as error:
+        print ("error", format(error))
+        db.rollback() # any errors, undo all changes
     finally:
         if db.is_connected():
             cursor.close()
-        if db:
-            db.close()
+        db.close()
             
 def uploadData(sql,val):
     try:
@@ -53,10 +53,10 @@ def uploadData(sql,val):
         cursor.execute(sql,val)
         db.commit()
         return cursor.fetchone()
-    except:
-        db.rollback()
+    except mysql.connector.Error as error:
+        print ("error", format(error))
+        db.rollback() # any errors, undo all changes
     finally:
         if db.is_connected():
             cursor.close()
-        if db:
-            db.close()
+        db.close()
