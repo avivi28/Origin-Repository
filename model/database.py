@@ -8,10 +8,10 @@ poolname="mysqlpool"
 poolsize=10
 
 CONFIG={
-   "host":'localhost', 
-   "user":'root', 
+   "host":os.getenv("mysql_host"), 
+   "user":os.getenv("mysql_root"), 
    "password":os.getenv("mysql_password"), 
-   "database":'travel',
+   "database":os.getenv("mysql_database"),
 }
 
 db=mysql.connector.connect(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, auth_plugin='mysql_native_password',**CONFIG)

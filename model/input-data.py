@@ -1,10 +1,21 @@
 import json
 import mysql.connector.pooling
+import os
+from dotenv import load_dotenv
+
+load_dotenv("./data/.env")
 
 poolname="mysqlpool"
 poolsize=3
 
-connectionpool=mysql.connector.pooling.MySQLConnectionPool(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, host='localhost', user='root', password="password", database='travel', auth_plugin='mysql_native_password')
+CONFIG={
+   "host":os.getenv("mysql_host"), 
+   "user":os.getenv("mysql_root"), 
+   "password":os.getenv("mysql_password"), 
+   "database":os.getenv("mysql_database"),
+}
+
+connectionpool=mysql.connector.pooling.MySQLConnectionPool(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, **CONFIG, auth_plugin='mysql_native_password')
 db = connectionpool.get_connection()
 cursor = db.cursor()
 
