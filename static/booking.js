@@ -234,8 +234,6 @@ TPDirect.card.onUpdate(function (update) {
 let returnMessage = document.getElementById('return_message');
 
 function onClick() {
-	showConnecting();
-
 	// 取得 TapPay Fields 的 status
 	const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 	let phoneNumberInput = document.getElementById('phone_number').value;
@@ -296,7 +294,7 @@ function onClick() {
 		})
 			.then((Res) => Res.json())
 			.then((Res) => {
-				console.log(Res);
+				showConnecting();
 				resData = Res['data'];
 				orderNumber = Res['data']['number'];
 				if (resData != null) {
