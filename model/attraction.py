@@ -1,5 +1,5 @@
 from flask import *
-from model.database import queryAll,queryOne
+from model.database import query_all,query_one
 
 class AttractionModel:
     def get(self):
@@ -11,7 +11,7 @@ class AttractionModel:
 
             if keyword is not None:
                 keyword="%"+keyword+"%"
-                data=queryAll("SELECT * FROM attractions WHERE attractions_name LIKE %s LIMIT 12 OFFSET %s", (keyword, limit_page,))
+                data=query_all("SELECT * FROM attractions WHERE attractions_name LIKE %s LIMIT 12 OFFSET %s", (keyword, limit_page,))
                 data=list(data)
                 if len(data)>=13: #in case 有整數
                     next_page=page+1
@@ -50,7 +50,7 @@ class AttractionModel:
                     success_data_return["data"].append(temp)
                 return success_data_return
             else:
-                data=queryAll("SELECT * FROM attractions LIMIT 12 OFFSET %s", (limit_page,))
+                data=query_all("SELECT * FROM attractions LIMIT 12 OFFSET %s", (limit_page,))
                 data=list(data)
                 if len(data)>=12:
                     next_page=page+1
@@ -99,7 +99,7 @@ class AttractionModel:
     def getId(self,attractionId):
         try:
             attractionId=int(attractionId)
-            Id_data=queryOne("SELECT * FROM attractions WHERE attractions_id = %s", (attractionId,))
+            Id_data=query_one("SELECT * FROM attractions WHERE attractions_id = %s", (attractionId,))
 
             images_data=Id_data['images'].replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")
 

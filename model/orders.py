@@ -1,6 +1,5 @@
-from distutils.log import error
 from flask import *
-from model.database import queryOne, uploadData
+from model.database import query_one, upload_data
 import requests
 import jwt
 import time
@@ -17,7 +16,7 @@ class ordersModel:
         token= request.cookies.get('token')
         if token is not None:
             order_number = str(orderNumber)
-            order_data = queryOne("SELECT * FROM orders INNER JOIN member ON orders.user_id = member.member_id INNER JOIN attractions ON orders.attraction_id = attractions.attractions_id WHERE orders.payment_number = %s", (order_number, ))
+            order_data = query_one("SELECT * FROM orders INNER JOIN member ON orders.user_id = member.member_id INNER JOIN attractions ON orders.attraction_id = attractions.attractions_id WHERE orders.payment_number = %s", (order_number, ))
             image_data = order_data['images']
             return_order_number = {
                 "data": {
@@ -89,7 +88,7 @@ class ordersModel:
 
                 sql = "INSERT INTO orders (payment_number, price, orders_date, orders_time, payment_status, user_phone, attraction_id, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
                 val = (order_number, input_amount, input_date, input_time, 1, input_phone, input_attractionId, input_userId, )
-                uploadData(sql,val)
+                upload_data(sql,val)
                 
                 prime_response = requests.post("https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime", headers = headers, data = json.dumps(prime_data)).json() #get the json content & convert into dictionary
                 prime_status = prime_response["status"]
@@ -106,10 +105,10 @@ class ordersModel:
                 }
 
                 if prime_status == 0:
-                    uploadData("UPDATE orders SET payment_status = %s WHERE payment_number = %s", (0, order_number,))
+                    upload_data("UPDATE orders SET payment_status = %s WHERE payment_number = %s", (0, order_number,))
                     payment_sql = "INSERT INTO payment (order_number, status, price, attraction_id, user_id) VALUES (%s, %s, %s, %s, %s)"
                     payment_val = (order_number, prime_status, input_amount, input_attractionId, input_userId, )
-                    uploadData(payment_sql, payment_val)
+                    upload_data(payment_sql, payment_val)
                     print (return_TapPaymessage)
 
                     return return_TapPaymessage, 200

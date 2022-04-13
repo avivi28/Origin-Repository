@@ -16,11 +16,10 @@ CONFIG={
 
 db=mysql.connector.connect(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, auth_plugin='mysql_native_password',**CONFIG)
 connectionPool=mysql.connector.pooling.MySQLConnectionPool(pool_name=poolname,pool_size=poolsize, pool_reset_session=True, auth_plugin='mysql_native_password',**CONFIG) #connection pool
-db=connectionPool.get_connection() #get data from connection pool
 
-def queryAll(sql,val):
+def query_all(sql,val):
     try:
-        db=connectionPool.get_connection()
+        db=connectionPool.get_connection() #get data from connection pool
         cursor = db.cursor(dictionary=True)
         cursor.execute(sql,val)
         return cursor.fetchall()
@@ -32,7 +31,7 @@ def queryAll(sql,val):
         if db:
             db.close()
 
-def queryOne(sql,val):
+def query_one(sql,val):
     try:
         db=connectionPool.get_connection()
         cursor = db.cursor(dictionary=True) 
@@ -46,7 +45,7 @@ def queryOne(sql,val):
             cursor.close()
         db.close()
             
-def uploadData(sql,val):
+def upload_data(sql,val):
     try:
         db=connectionPool.get_connection()
         cursor = db.cursor()

@@ -1,5 +1,5 @@
 from flask import *
-from model.database import queryOne, uploadData
+from model.database import query_one, upload_data
 import jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
 import os
@@ -30,7 +30,7 @@ class UserModel:
             json_data=request.get_json()
             input_email=json_data['email']
             input_password=json_data['password']
-            data=queryOne("SELECT * FROM member WHERE email = %s", (input_email, ))
+            data=query_one("SELECT * FROM member WHERE email = %s", (input_email, ))
             hashed_password=data['password']
             checked_password= check_password_hash(hashed_password, input_password) # compare hashed_password with input_password
             if data is not None:
@@ -68,7 +68,7 @@ class UserModel:
             input_email = json_data["email"]
             input_password = json_data["password"]
             hashed_password = generate_password_hash(input_password)
-            data=queryOne("SELECT * FROM member WHERE email = %s", (input_email, ))
+            data=query_one("SELECT * FROM member WHERE email = %s", (input_email, ))
             if data is not None:
                 register_fail={
                     "error":true,
@@ -76,7 +76,7 @@ class UserModel:
                 }
                 return register_fail, 400
             else:
-                uploadData("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (input_name, input_email, hashed_password, ))
+                upload_data("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (input_name, input_email, hashed_password, ))
                 register_success={
                     "ok": true
                     }

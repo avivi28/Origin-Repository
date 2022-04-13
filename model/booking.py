@@ -1,5 +1,5 @@
 from flask import *
-from model.database import queryOne, uploadData
+from model.database import query_one, upload_data
 import jwt
 
 true = True
@@ -11,10 +11,10 @@ class bookingModel:
         if token is not None:
             tokenData = jwt.decode(token, options={"verify_signature": False})
             token_userId = tokenData["id"]
-            booking_data = queryOne("SELECT * FROM booking WHERE user_id = %s ORDER BY booking_id DESC LIMIT 1", (token_userId, ))
+            booking_data = query_one("SELECT * FROM booking WHERE user_id = %s ORDER BY booking_id DESC LIMIT 1", (token_userId, ))
             if booking_data is not None:
                 attraction_id = booking_data['attraction_id']
-                attraction_data = queryOne("SELECT * FROM attractions WHERE attractions_id = %s", (attraction_id, ))
+                attraction_data = query_one("SELECT * FROM attractions WHERE attractions_id = %s", (attraction_id, ))
                 image_data=attraction_data['images'].split(',')[0].replace("[","").replace("'","",2)
 
                 get_success = {
@@ -54,7 +54,7 @@ class bookingModel:
             token_userId = tokenData["id"]
 
             if token is not None:
-                uploadData("INSERT INTO booking (attraction_id, user_id, booking_date, booking_time, price) VALUES (%s, %s, %s, %s, %s)", (input_attractionId, token_userId, input_date, input_time, input_price, ))
+                upload_data("INSERT INTO booking (attraction_id, user_id, booking_date, booking_time, price) VALUES (%s, %s, %s, %s, %s)", (input_attractionId, token_userId, input_date, input_time, input_price, ))
                 booking_succes = {
                     "ok": true
                 }
@@ -85,7 +85,7 @@ class bookingModel:
         token_userId = tokenData["id"]
         
         if token is not None:
-            uploadData("DELETE FROM booking WHERE user_id = %s", (token_userId, ))
+            upload_data("DELETE FROM booking WHERE user_id = %s", (token_userId, ))
             delete_success = {
                 "ok": true,
             }
