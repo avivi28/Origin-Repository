@@ -17,14 +17,12 @@ class UserModel:
         token= request.cookies.get('token')
         if token is not None:
             tokenData= jwt.decode(token, options={"verify_signature": False}) # options for JWT decode
-            userInformation={
+            return {
                 "data":tokenData
             }
-            return userInformation
         else:
-            nullData={
+            return {
                 "data": null}
-            return nullData
     
     def sign_in(self):
         try:
@@ -47,27 +45,22 @@ class UserModel:
                             payload=payload_data,
                             key=app.secret_key
                         )
-                        sign_in_success={
-                            "ok": true
-                            }
-                        return sign_in_success, 200, token
+                        return {"ok": true}, 200, token
                 else:
-                    sign_in_fail={
+                    return {
                         "error":true,
                         "message":"登入失敗，帳號或密碼錯誤",
-                    }
-                    return sign_in_fail, 400
+                    }, 400
             else:
                 return {
                 "error":true,
                 "message":"資料格式錯誤",
             }, 400
         except:
-            server_error={
+            return {
                     "error":true,
                     "message":"伺服器內部錯誤",
-                }
-            return server_error, 500, json_data
+                }, 500, json_data
             
     def register(self):
         try:
@@ -81,17 +74,13 @@ class UserModel:
             if email_format_check and name_format_check:
                 data=query_one("SELECT * FROM member WHERE email = %s", (input_email, ))
                 if data is not None:
-                    register_fail={
+                    return {
                         "error":true,
                         "message":"註冊失敗，重複的 Email",
-                    }
-                    return register_fail, 400
+                    }, 400
                 else:
                     upload_data("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (input_name, input_email, hashed_password, ))
-                    register_success={
-                        "ok": true
-                    }
-                    return register_success, 200
+                    return { "ok": true }, 200
             else:
                 return  {
                 "error":true,
@@ -104,9 +93,6 @@ class UserModel:
                 }, 500
         
     def log_out(self):
-        logout_success = {
-                "ok": true
-                }
-        return logout_success
+        return { "ok": true }
 
 user_model=UserModel()

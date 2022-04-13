@@ -32,16 +32,12 @@ class bookingModel:
                 }
                 return get_success, 200
             else:
-                nullData = {
-                    "data": null
-                }
-                return nullData, 200
+                return {"data": null}, 200
         else:
-            logIn_error = {
+            return {
                 "error": true,
                 "message": "未登入系統，拒絕存取"
-            }
-            return logIn_error, 403
+            }, 403
     def post_booking(self):
         try:
             json_data = request.get_json()
@@ -55,29 +51,22 @@ class bookingModel:
 
             if token is not None:
                 upload_data("INSERT INTO booking (attraction_id, user_id, booking_date, booking_time, price) VALUES (%s, %s, %s, %s, %s)", (input_attractionId, token_userId, input_date, input_time, input_price, ))
-                booking_succes = {
-                    "ok": true
-                }
-                return booking_succes, 200
+                return {"ok": true}, 200
             elif token is None:
-                logIn_error = {
+                return {
                     "error": true,
                     "message": "未登入系統，拒絕存取"
-                }
-                return logIn_error, 403
+                }, 403
             else:
-                booking_error = {
+                return {
                     "error": true,
                     "message": "建立失敗，輸入不正確或其他原因"
-                }
-
-            return booking_error, 400
+                }, 400
         except:   
-            server_error={
+            return {
                     "error":true,
                     "message":"伺服器內部錯誤",
-                }
-            return server_error, 500
+                }, 500
     
     def delete_booking(self):
         token= request.cookies.get('token')
@@ -86,14 +75,10 @@ class bookingModel:
         
         if token is not None:
             upload_data("DELETE FROM booking WHERE user_id = %s", (token_userId, ))
-            delete_success = {
-                "ok": true,
-            }
-            return delete_success, 200
+            return {"ok": true}, 200
         else:
-            logIn_error = {
+            return {
                 "error": true,
                 "message": "自訂的錯誤訊息"
-            }
-            return logIn_error, 403
+            }, 403
 booking_model=bookingModel()

@@ -1,6 +1,8 @@
 from flask import *
 from model.database import query_all,query_one
 
+true = True
+
 class AttractionModel:
     def get(self):
         try:
@@ -89,12 +91,10 @@ class AttractionModel:
                     success_data_return["data"].append(temp) #要一步步塞data進去
                 return success_data_return
         except:
-            true = True
-            error_message={
+            return {
                 "error": true,
                 "message": "Server Side Error!"
             }
-            return error_message
         
     def getId(self,attractionId):
         try:
@@ -119,18 +119,14 @@ class AttractionModel:
                 }
             return success_id_data_return
         except TypeError: 
-            true = True
-            error_message={
+            return {
                 "error": true,
                 "message": "Wrong Request ID!"
             }
-            return error_message
         except:
-            true = True
-            error_message={
+            return {
                 "error": true,
                 "message": "Server Side Error!"
             }
-            return error_message
 
 attraction_model=AttractionModel()
