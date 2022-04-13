@@ -11,7 +11,7 @@ class AttractionModel:
 
             if keyword is not None:
                 keyword="%"+keyword+"%"
-                data=queryAll("SELECT * FROM attractions WHERE name LIKE %s LIMIT 12 OFFSET %s", (keyword, limit_page,))
+                data=queryAll("SELECT * FROM attractions WHERE attractions_name LIKE %s LIMIT 12 OFFSET %s", (keyword, limit_page,))
                 data=list(data)
                 if len(data)>=13: #in case 有整數
                     next_page=page+1
@@ -24,16 +24,16 @@ class AttractionModel:
                 }
                 
                 for x in range(0,len(data)):
-                    id=data[x][0]
-                    name=data[x][1]
-                    category=data[x][2]
-                    description=data[x][3]
-                    address=data[x][4]
-                    transport=data[x][5]
-                    mrt=data[x][6]
-                    latitude=data[x][7]
-                    longitude=data[x][8]
-                    images_data=data[x][9].replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")
+                    id=data[x]['attractions_id']
+                    name=data[x]['attractions_name']
+                    category=data[x]['category']
+                    description=data[x]['description']
+                    address=data[x]['address']
+                    transport=data[x]['transport']
+                    mrt=data[x]['mrt']
+                    latitude=data[x]['latitude']
+                    longitude=data[x]['longitude']
+                    images_data=data[x]['images'].replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")
                     
                     temp = {
                         "id": id,
@@ -63,16 +63,16 @@ class AttractionModel:
                 }
                 
                 for x in range(0,len(data)):
-                    id=data[x][0]
-                    name=data[x][1]
-                    category=data[x][2]
-                    description=data[x][3]
-                    address=data[x][4]
-                    transport=data[x][5]
-                    mrt=data[x][6]
-                    latitude=data[x][7]
-                    longitude=data[x][8]
-                    images_data=data[x][9].replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")
+                    id=data[x]['attractions_id']
+                    name=data[x]['attractions_name']
+                    category=data[x]['category']
+                    description=data[x]['description']
+                    address=data[x]['address']
+                    transport=data[x]['transport']
+                    mrt=data[x]['mrt']
+                    latitude=data[x]['latitude']
+                    longitude=data[x]['longitude']
+                    images_data=data[x]['images'].replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")
                     
                     temp = {
                         "id": id,

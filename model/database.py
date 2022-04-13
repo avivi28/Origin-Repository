@@ -21,7 +21,7 @@ db=connectionPool.get_connection() #get data from connection pool
 def queryAll(sql,val):
     try:
         db=connectionPool.get_connection()
-        cursor = db.cursor()
+        cursor = db.cursor(dictionary=True)
         cursor.execute(sql,val)
         return cursor.fetchall()
     except:
