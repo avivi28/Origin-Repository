@@ -2,6 +2,7 @@ from flask import *
 from model.database import query_one, upload_data
 import jwt
 import re
+import traceback
 
 true = True
 null = None
@@ -80,7 +81,8 @@ class bookingModel:
                     "error": true,
                     "message": "資料格式錯誤",
                 }, 400
-        except:
+        except Exception as e:
+            traceback.print_exc()
             return {
                 "error": true,
                 "message": "伺服器內部錯誤",

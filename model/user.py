@@ -1,3 +1,4 @@
+from inspect import trace
 from flask import *
 from model.database import query_one, upload_data
 import jwt
@@ -5,6 +6,7 @@ from flask_bcrypt import generate_password_hash, check_password_hash
 import os
 from dotenv import load_dotenv
 import re  # Regex
+import traceback
 
 load_dotenv("./data/.env")
 
@@ -62,7 +64,8 @@ class UserModel:
                     "error": true,
                     "message": "資料格式錯誤",
                 }, 400
-        except:
+        except Exception as e:
+            traceback.print_exc()
             return {
                 "error": true,
                 "message": "伺服器內部錯誤",
@@ -96,7 +99,8 @@ class UserModel:
                     "error": true,
                     "message": "資料格式錯誤",
                 }, 400
-        except:
+        except Exception as e:
+            traceback.print_exc()
             return {
                 "error": true,
                 "message": "伺服器內部錯誤",

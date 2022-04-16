@@ -6,6 +6,7 @@ import time
 import os
 from dotenv import load_dotenv
 import re
+import traceback
 
 load_dotenv("./data/.env")
 
@@ -144,6 +145,7 @@ class ordersModel:
                 return {"error": true, "message": "未登入系統，拒絕存取"}, 403
 
         except Exception as e:
+            traceback.print_exc()
             return {"error": true, "message": "伺服器內部錯誤"}, 500
 
 

@@ -1,5 +1,6 @@
 from flask import *
 from model.database import query_all, query_one
+import traceback
 
 true = True
 
@@ -130,7 +131,8 @@ class AttractionModel:
                 "error": true,
                 "message": "Wrong Request ID!"
             }
-        except:
+        except Exception as e:
+            traceback.print_exc()
             return {
                 "error": true,
                 "message": "Server Side Error!"
