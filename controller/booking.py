@@ -1,9 +1,10 @@
 from flask import *
 from model.booking import booking_model
 
-booking_api=Blueprint("booking",__name__)
+booking_api = Blueprint("booking", __name__)
 
-@booking_api.route("/api/booking", methods=['GET','POST','PATCH','DELETE'])
+
+@booking_api.route("/api/booking", methods=['GET', 'POST', 'PATCH', 'DELETE'])
 def get():
     if request.method == 'GET':
         return_result = booking_model.get_booking()
@@ -14,7 +15,6 @@ def get():
         else:
             return jsonify(get_result), 403
 
-    
     elif request.method == 'POST':
         return_result = booking_model.post_booking()
         post_result = return_result[0]
@@ -27,7 +27,7 @@ def get():
             return jsonify(post_result), 403
         else:
             return jsonify(post_result), 500
-    
+
     elif request.method == 'DELETE':
         return_result = booking_model.delete_booking()
         delete_result = return_result[0]

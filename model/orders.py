@@ -12,33 +12,35 @@ load_dotenv("./data/.env")
 true = True
 false = False
 
+
 class ordersModel:
     def get_orders(self, orderNumber):
-        token= request.cookies.get('token')
+        token = request.cookies.get('token')
         if token is not None:
             order_number = str(orderNumber)
-            order_number_check = re.search("[0-9]",order_number)
+            order_number_check = re.search("[0-9]", order_number)
             if order_number_check:
-                order_data = query_one("SELECT * FROM orders INNER JOIN member ON orders.user_id = member.member_id INNER JOIN attractions ON orders.attraction_id = attractions.attractions_id WHERE orders.payment_number = %s", (order_number, ))
+                order_data = query_one(
+                    "SELECT * FROM orders INNER JOIN member ON orders.user_id = member.member_id INNER JOIN attractions ON orders.attraction_id = attractions.attractions_id WHERE orders.payment_number = %s", (order_number, ))
                 image_data = order_data['images']
                 return_order_number = {
                     "data": {
                         "number": order_number,
                         "price": order_data['price'],
                         "trip": {
-                        "attraction": {
-                            "id": order_data['attractions_id'],
-                            "name": order_data['attractions_name'],
-                            "address": order_data['address'],
-                            "image": image_data.replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")[0]
-                        },
-                        "date": order_data['orders_date'],
-                        "time": order_data['orders_time']
+                            "attraction": {
+                                "id": order_data['attractions_id'],
+                                "name": order_data['attractions_name'],
+                                "address": order_data['address'],
+                                "image": image_data.replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(",")[0]
+                            },
+                            "date": order_data['orders_date'],
+                            "time": order_data['orders_time']
                         },
                         "contact": {
-                        "name": order_data['name'],
-                        "email": order_data['email'],
-                        "phone": order_data['user_phone']
+                            "name": order_data['name'],
+                            "email": order_data['email'],
+                            "phone": order_data['user_phone']
                         },
                         "status": order_data['payment_status'],
                     }
@@ -46,15 +48,16 @@ class ordersModel:
                 return return_order_number, 200
             else:
                 return {
-                "error":true,
-                "message":"資料格式錯誤",
-            }, 400
+                    "error": true,
+                    "message": "資料格式錯誤",
+                }, 400
         else:
             return {"error": true, "message": "未登入系統，拒絕存取"}, 403
-    
+
     def post_orders(self):
         try:
-            local_time = str(time.strftime('%Y%m%D%H%M%S', time.localtime(time.time())).replace('/','')+str(time.time()).replace(',','')[-7:])
+            local_time = str(time.strftime('%Y%m%D%H%M%S', time.localtime(
+                time.time())).replace('/', '')+str(time.time()).replace(',', '')[-7:])
             order_number = local_time
 
             json_data = request.get_json()
@@ -71,7 +74,7 @@ class ordersModel:
             input_time = attraction_data["time"]
             input_attractionId = attraction_data["attraction"]["id"]
 
-            input_phone_check = re.search("[0-9|-]",input_phone)
+            input_phone_check = re.search("[0-9|-]", input_phone)
 
             headers = {
                 'x-api-key': os.getenv("parent_key"),
@@ -82,7 +85,7 @@ class ordersModel:
                 "prime": input_prime,
                 "partner_key": os.getenv("parent_key"),
                 "merchant_id": os.getenv("merchant_id"),
-                "details":"TapPay Test",
+                "details": "TapPay Test",
                 "amount": input_amount,
                 "cardholder": {
                     "phone_number": input_phone,
@@ -91,17 +94,20 @@ class ordersModel:
                 },
             }
 
-            token= request.cookies.get('token')
+            token = request.cookies.get('token')
             if token is not None:
-                tokenData= jwt.decode(token, options={"verify_signature": False})
+                tokenData = jwt.decode(
+                    token, options={"verify_signature": False})
                 input_userId = tokenData['id']
 
                 if input_phone_check and input_phone is not None:
                     sql = "INSERT INTO orders (payment_number, price, orders_date, orders_time, payment_status, user_phone, attraction_id, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-                    val = (order_number, input_amount, input_date, input_time, 1, input_phone, input_attractionId, input_userId, )
-                    upload_data(sql,val)
-                    
-                    prime_response = requests.post("https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime", headers = headers, data = json.dumps(prime_data)).json() #get the json content & convert into dictionary
+                    val = (order_number, input_amount, input_date, input_time,
+                           1, input_phone, input_attractionId, input_userId, )
+                    upload_data(sql, val)
+
+                    prime_response = requests.post("https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime", headers=headers,
+                                                   data=json.dumps(prime_data)).json()  # get the json content & convert into dictionary
                     prime_status = prime_response["status"]
                     prime_msg = prime_response["msg"]
 
@@ -116,26 +122,29 @@ class ordersModel:
                     }
 
                     if prime_status == 0:
-                        upload_data("UPDATE orders SET payment_status = %s WHERE payment_number = %s", (0, order_number, ))
+                        upload_data(
+                            "UPDATE orders SET payment_status = %s WHERE payment_number = %s", (0, order_number, ))
                         payment_sql = "INSERT INTO payment (order_number, status, price, attraction_id, user_id) VALUES (%s, %s, %s, %s, %s)"
-                        payment_val = (order_number, prime_status, input_amount, input_attractionId, input_userId, )
+                        payment_val = (
+                            order_number, prime_status, input_amount, input_attractionId, input_userId, )
                         upload_data(payment_sql, payment_val)
 
                         return return_TapPaymessage, 200
 
                     else:
-                        return {"error": true,"message": prime_msg}, 400
+                        return {"error": true, "message": prime_msg}, 400
 
                 else:
                     return {
-                    "error":true,
-                    "message":"資料格式錯誤",
+                        "error": true,
+                        "message": "資料格式錯誤",
                     }, 400
 
             else:
-                return {"error": true,"message": "未登入系統，拒絕存取"}, 403
+                return {"error": true, "message": "未登入系統，拒絕存取"}, 403
 
         except Exception as e:
-            return {"error": true,"message": "伺服器內部錯誤"}, 500
+            return {"error": true, "message": "伺服器內部錯誤"}, 500
 
-orders_model=ordersModel()
+
+orders_model = ordersModel()
