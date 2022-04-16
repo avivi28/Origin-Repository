@@ -2,6 +2,11 @@ let pathName = window.location.pathname;
 let attractionId = pathName.split('/')[2];
 let data = document.getElementById('image-data');
 
+function showLoading() {
+	document.getElementById('loader').style.display = 'none';
+	// document.querySelectorAll('img').style.display = 'block';
+}
+
 function connectAttractionAPI(url) {
 	url = '/api/attraction/' + attractionId;
 	fetch(url, {
@@ -9,6 +14,7 @@ function connectAttractionAPI(url) {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
+			showLoading();
 			getDataFromID(Res);
 			showImg(indexValue);
 		})

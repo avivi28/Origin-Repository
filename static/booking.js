@@ -24,6 +24,7 @@ let footer = document.querySelector('footer');
 let orderedData;
 
 function getBookingAPI() {
+	showLoading();
 	fetch(bookingAPIUrl, {
 		method: 'GET',
 		credentials: 'same-origin',
@@ -36,12 +37,8 @@ function getBookingAPI() {
 				bookingBody.style = 'margin: 35px 0px 40px';
 				footer.style = 'padding-bottom: 806px';
 			} else {
-				function Timer() {
-					setTimeout(showLoading, 1000);
-				}
-				Timer();
 				showData(Res);
-				showUserDate();
+				showUserData();
 			}
 		})
 		.catch((error) => console.log(error));
@@ -101,11 +98,9 @@ userEmail = userData['email'];
 titleName.textContent = '您好，' + userName + '，待預訂的行程如下：';
 
 //----------show User info by using data in JWT-------
-function showUserDate() {
-	let contactName = document.getElementById('contact_name');
-	contactName.setAttribute('value', userName);
-	let contactEmail = document.getElementById('contact_email');
-	contactEmail.setAttribute('value', userEmail);
+function showUserData() {
+	document.getElementById('contact_name').setAttribute('value', userName);
+	document.getElementById('contact_email').setAttribute('value', userEmail);
 }
 
 //-----------delete the selected booking--------------
@@ -239,8 +234,6 @@ TPDirect.card.onUpdate(function (update) {
 let returnMessage = document.getElementById('return_message');
 
 function onClick() {
-	showConnecting();
-
 	// 取得 TapPay Fields 的 status
 	const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 	let phoneNumberInput = document.getElementById('phone_number').value;
@@ -301,7 +294,7 @@ function onClick() {
 		})
 			.then((Res) => Res.json())
 			.then((Res) => {
-				console.log(Res);
+				showConnecting();
 				resData = Res['data'];
 				orderNumber = Res['data']['number'];
 				if (resData != null) {
@@ -323,7 +316,10 @@ function successBooking() {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
-			location.href = '/thankyou?number=' + orderNumber;
+			deleteData = Res['ok'];
+			if (deleteData == true) {
+				location.href = '/thankyou?number=' + orderNumber;
+			}
 		})
 		.catch((error) => console.log(error));
 }

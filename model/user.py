@@ -1,97 +1,113 @@
+from inspect import trace
 from flask import *
-from model.database import queryOne, uploadData
+from model.database import query_one, upload_data
 import jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
 import os
 from dotenv import load_dotenv
+import re  # Regex
+import traceback
 
 load_dotenv("./data/.env")
 
 true = True
 null = None
-app.secret_key= os.getenv("secret_key")
+app.secret_key = os.getenv("secret_key")
+
 
 class UserModel:
-    def getUser(self):
-        token= request.cookies.get('token')
+    def get_user(self):
+        token = request.cookies.get('token')
         if token is not None:
-            tokenData= jwt.decode(token, options={"verify_signature": False}) # options for JWT decode
-            userInformation={
-                "data":tokenData
+            # options for JWT decode
+            tokenData = jwt.decode(token, options={"verify_signature": False})
+            return {
+                "data": tokenData
             }
-            return userInformation
         else:
-            nullData={
+            return {
                 "data": null}
-            return nullData
-    
-    def signIn(self):
+
+    def sign_in(self):
         try:
-            json_data=request.get_json()
-            input_email=json_data['email']
-            input_password=json_data['password']
-            data=queryOne("SELECT * FROM member WHERE email = %s", (input_email, ))
-            hashed_password=data[3]
-            checked_password= check_password_hash(hashed_password, input_password) # compare hashed_password with input_password
-            if data is not None:
-                if checked_password is True:
-                    payload_data={
-                        "id":data[0],
-                        "name":data[1],
-                        "email":data[2]
-                    }
-                    token=jwt.encode(
-                        payload=payload_data,
-                        key=app.secret_key
-                    )
-                    sign_in_success={
-                        "ok": true
+            json_data = request.get_json()
+            input_email = json_data['email']
+            input_password = json_data['password']
+            email_format_check = re.search(
+                "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$", input_email)
+            if email_format_check:
+                data = query_one(
+                    "SELECT * FROM member WHERE email = %s", (input_email, ))
+                hashed_password = data['password']
+                # compare hashed_password with input_password
+                checked_password = check_password_hash(
+                    hashed_password, input_password)
+                if data is not None:
+                    if checked_password is True:
+                        payload_data = {
+                            "id": data['member_id'],
+                            "name": data['name'],
+                            "email": data['email']
                         }
-                    return sign_in_success, 200, token
+                        token = jwt.encode(
+                            payload=payload_data,
+                            key=app.secret_key
+                        )
+                        return {"ok": true}, 200, token
+                else:
+                    return {
+                        "error": true,
+                        "message": "登入失敗，帳號或密碼錯誤",
+                    }, 400
             else:
-                sign_in_fail={
-                    "error":true,
-                    "message":"登入失敗，帳號或密碼錯誤",
-                }
-                return sign_in_fail, 400
-        except:
-            server_error={
-                    "error":true,
-                    "message":"伺服器內部錯誤",
-                }
-            return server_error, 500, json_data
-            
+                return {
+                    "error": true,
+                    "message": "資料格式錯誤",
+                }, 400
+        except Exception as e:
+            traceback.print_exc()
+            return {
+                "error": true,
+                "message": "伺服器內部錯誤",
+            }, 500, json_data
+
     def register(self):
         try:
-            json_data=request.get_json() #get back json file from request
+            json_data = request.get_json()  # get back json file from request
             input_name = json_data["name"]
             input_email = json_data["email"]
             input_password = json_data["password"]
             hashed_password = generate_password_hash(input_password)
-            data=queryOne("SELECT * FROM member WHERE email = %s", (input_email, ))
-            if data is not None:
-                register_fail={
-                    "error":true,
-                    "message":"註冊失敗，重複的 Email",
-                }
-                return register_fail, 400
+            email_format_check = re.search(
+                "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$", input_email)
+            # prevent any special characters
+            name_format_check = re.search("[a-zA-Z0-9]", input_name)
+            if email_format_check and name_format_check:
+                data = query_one(
+                    "SELECT * FROM member WHERE email = %s", (input_email, ))
+                if data is not None:
+                    return {
+                        "error": true,
+                        "message": "註冊失敗，重複的 Email",
+                    }, 400
+                else:
+                    upload_data("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (
+                        input_name, input_email, hashed_password, ))
+                    return {"ok": true}, 200
             else:
-                uploadData("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (input_name, input_email, hashed_password, ))
-                register_success={
-                    "ok": true
-                    }
-            return register_success, 200
-        except:   
-            server_error={
-                    "error":true,
-                    "message":"伺服器內部錯誤",
-                }
-            return server_error, 500
-        
-    def logOut(self):
-        logout_success = {
-                "ok": true
-                }
-        return logout_success
+                return {
+                    "error": true,
+                    "message": "資料格式錯誤",
+                }, 400
+        except Exception as e:
+            traceback.print_exc()
+            return {
+                "error": true,
+                "message": "伺服器內部錯誤",
+            }, 500
 
-user_model=UserModel()
+    def log_out(self):
+        return {"ok": true}
+
+
+user_model = UserModel()
