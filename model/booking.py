@@ -4,9 +4,6 @@ import jwt
 import re
 import traceback
 
-true = True
-null = None
-
 
 class bookingModel:
     def get_booking(self):
@@ -38,10 +35,10 @@ class bookingModel:
                 }
                 return get_success, 200
             else:
-                return {"data": null}, 200
+                return {"data": None}, 200
         else:
             return {
-                "error": true,
+                "error": True,
                 "message": "未登入系統，拒絕存取"
             }, 403
 
@@ -65,26 +62,26 @@ class bookingModel:
                 if token is not None:
                     upload_data("INSERT INTO booking (attraction_id, user_id, booking_date, booking_time, price) VALUES (%s, %s, %s, %s, %s)", (
                         input_attractionId, token_userId, input_date, input_time, input_price, ))
-                    return {"ok": true}, 200
+                    return {"ok": True}, 200
                 elif token is None:
                     return {
-                        "error": true,
+                        "error": True,
                         "message": "未登入系統，拒絕存取"
                     }, 403
                 else:
                     return {
-                        "error": true,
+                        "error": True,
                         "message": "建立失敗，輸入不正確或其他原因"
                     }, 400
             else:
                 return {
-                    "error": true,
+                    "error": True,
                     "message": "資料格式錯誤",
                 }, 400
         except Exception as e:
             traceback.print_exc()
             return {
-                "error": true,
+                "error": True,
                 "message": "伺服器內部錯誤",
             }, 500
 
@@ -96,10 +93,10 @@ class bookingModel:
         if token is not None:
             upload_data("DELETE FROM booking WHERE user_id = %s",
                         (token_userId, ))
-            return {"ok": true}, 200
+            return {"ok": True}, 200
         else:
             return {
-                "error": true,
+                "error": True,
                 "message": "自訂的錯誤訊息"
             }, 403
 

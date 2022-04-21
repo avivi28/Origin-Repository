@@ -2,8 +2,6 @@ from flask import *
 from model.database import query_all, query_one
 import traceback
 
-true = True
-
 
 class AttractionModel:
     def get(self):
@@ -98,7 +96,7 @@ class AttractionModel:
                 return success_data_return
         except:
             return {
-                "error": true,
+                "error": True,
                 "message": "Server Side Error!"
             }
 
@@ -128,13 +126,13 @@ class AttractionModel:
             return success_id_data_return
         except TypeError:
             return {
-                "error": true,
+                "error": True,
                 "message": "Wrong Request ID!"
             }
         except Exception as e:
             traceback.print_exc()
             return {
-                "error": true,
+                "error": True,
                 "message": "Server Side Error!"
             }
 

@@ -9,9 +9,6 @@ import re  # Regex
 import traceback
 
 load_dotenv("./data/.env")
-
-true = True
-null = None
 app.secret_key = os.getenv("secret_key")
 
 
@@ -26,7 +23,7 @@ class UserModel:
             }
         else:
             return {
-                "data": null}
+                "data": None}
 
     def sign_in(self):
         try:
@@ -53,21 +50,21 @@ class UserModel:
                             payload=payload_data,
                             key=app.secret_key
                         )
-                        return {"ok": true}, 200, token
+                        return {"ok": True}, 200, token
                 else:
                     return {
-                        "error": true,
+                        "error": True,
                         "message": "登入失敗，帳號或密碼錯誤",
                     }, 400
             else:
                 return {
-                    "error": true,
+                    "error": True,
                     "message": "資料格式錯誤",
                 }, 400
         except Exception as e:
             traceback.print_exc()
             return {
-                "error": true,
+                "error": True,
                 "message": "伺服器內部錯誤",
             }, 500, json_data
 
@@ -87,27 +84,27 @@ class UserModel:
                     "SELECT * FROM member WHERE email = %s", (input_email, ))
                 if data is not None:
                     return {
-                        "error": true,
+                        "error": True,
                         "message": "註冊失敗，重複的 Email",
                     }, 400
                 else:
                     upload_data("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)", (
                         input_name, input_email, hashed_password, ))
-                    return {"ok": true}, 200
+                    return {"ok": True}, 200
             else:
                 return {
-                    "error": true,
+                    "error": True,
                     "message": "資料格式錯誤",
                 }, 400
         except Exception as e:
             traceback.print_exc()
             return {
-                "error": true,
+                "error": True,
                 "message": "伺服器內部錯誤",
             }, 500
 
     def log_out(self):
-        return {"ok": true}
+        return {"ok": True}
 
 
 user_model = UserModel()

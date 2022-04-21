@@ -10,9 +10,6 @@ import traceback
 
 load_dotenv("./data/.env")
 
-true = True
-false = False
-
 
 class ordersModel:
     def get_orders(self, orderNumber):
@@ -49,11 +46,11 @@ class ordersModel:
                 return return_order_number, 200
             else:
                 return {
-                    "error": true,
+                    "error": True,
                     "message": "資料格式錯誤",
                 }, 400
         else:
-            return {"error": true, "message": "未登入系統，拒絕存取"}, 403
+            return {"error": True, "message": "未登入系統，拒絕存取"}, 403
 
     def post_orders(self):
         try:
@@ -133,20 +130,20 @@ class ordersModel:
                         return return_TapPaymessage, 200
 
                     else:
-                        return {"error": true, "message": prime_msg}, 400
+                        return {"error": True, "message": prime_msg}, 400
 
                 else:
                     return {
-                        "error": true,
+                        "error": True,
                         "message": "資料格式錯誤",
                     }, 400
 
             else:
-                return {"error": true, "message": "未登入系統，拒絕存取"}, 403
+                return {"error": True, "message": "未登入系統，拒絕存取"}, 403
 
         except Exception as e:
             traceback.print_exc()
-            return {"error": true, "message": "伺服器內部錯誤"}, 500
+            return {"error": True, "message": "伺服器內部錯誤"}, 500
 
 
 orders_model = ordersModel()
