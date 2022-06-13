@@ -295,6 +295,7 @@ function onClick() {
 			.then((Res) => Res.json())
 			.then((Res) => {
 				showConnecting();
+				console.log(Res);
 				resData = Res['data'];
 				orderNumber = Res['data']['number'];
 				if (resData != null) {

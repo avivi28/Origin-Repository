@@ -10,6 +10,8 @@
 
 ### Main Features:
 
+![ezgif-1-c0ed11ece0](https://user-images.githubusercontent.com/95410966/173286308-13b22667-d4fa-4d84-82c9-ba183a85f804.gif)
+
 - Register, Log in, Sign up
 - Authenticate user with `JWT`
 - Explore all attractions on homepage
