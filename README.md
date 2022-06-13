@@ -1,6 +1,6 @@
 <h1 align="center"> Taipei-OneDayTrip 🧋</h1>
 
-<p align="center"> <i>"Enjoy every corner of the world."</i> 🐾</p>
+<p align="center"> <i>"Enjoy every corner of the world."</i> 🧭</p>
 
 🗺️ Taipei-OneDayTrip is an e-commerce website that allows users to explore, and book a one-day trip in Taipei.
 
@@ -43,13 +43,10 @@
 - `CSS`
 - `AJAX`
 
-### Other Techniques ⚙️:
-
-- `Figma`
-- `Swagger`
-- `UserGuiding`
-
 ### Database Schema 💾:
+
+<p align="center">
+![Screenshot 2022-06-13 120058](https://user-images.githubusercontent.com/95410966/173277431-3a4603d1-3a06-497b-8e91-59c9d5172389.png) </p>
 
 ### Architecture Diagram 🏰:
 
