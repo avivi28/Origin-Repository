@@ -45,8 +45,7 @@
 
 ### Database Schema 💾:
 
-<p align="center">
-![Screenshot 2022-06-13 120058](https://user-images.githubusercontent.com/95410966/173277431-3a4603d1-3a06-497b-8e91-59c9d5172389.png) </p>
+![Screenshot 2022-06-13 120058](https://user-images.githubusercontent.com/95410966/173277549-fc5de6de-2c92-4ffe-8bb0-c8088ddcb541.png)
 
 ### Architecture Diagram 🏰:
 
