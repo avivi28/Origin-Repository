@@ -1,6 +1,6 @@
 <h1 align="center"> Taipei-OneDayTrip 🧋</h1>
 
-<p align="center"> <i>"Enjoy every corner of the world."</i> 🧭</p>
+<p align="center"> <i>"Explore every corner of the world in Taipei."</i> 🧭</p>
 
 🗺️ Taipei-OneDayTrip is an e-commerce website that allows users to explore, and book a one-day trip in Taipei.
 
@@ -48,6 +48,8 @@
 ![Screenshot 2022-06-13 120058](https://user-images.githubusercontent.com/95410966/173277549-fc5de6de-2c92-4ffe-8bb0-c8088ddcb541.png)
 
 ### Architecture Diagram 🏰:
+
+![image_2022-06-13_13-16-05](https://user-images.githubusercontent.com/95410966/173284630-57d7a10b-1d95-4314-83d5-e8c271301ce9.png)
 
 ### Figma Prototype 👩🏻‍🎨:
 
