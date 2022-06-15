@@ -4,7 +4,7 @@
 
 🗺️ Taipei-OneDayTrip is an e-commerce website that allows users to explore, and book a one-day trip in Taipei.
 
-🔗 Website URL: http://52.204.167.98:3000/
+🔗 Website URL: http://13.208.55.153:3000/
 
 🤖 Display account: `panda@panda.com`/`panda`
 
