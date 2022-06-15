@@ -2,14 +2,16 @@ import mysql.connector.pooling
 import os
 from dotenv import load_dotenv
 
-load_dotenv("./data/.env")
+load_dotenv()
 
 poolname = "mysqlpool"
 poolsize = 10
 
+print(os.getenv("mysql_host"))
+
 CONFIG = {
     "host": os.getenv("mysql_host"),
-    "user": os.getenv("mysql_root"),
+    "user":  os.getenv("mysql_root"),
     "password": os.getenv("mysql_password"),
     "database": os.getenv("mysql_database"),
 }
@@ -31,8 +33,7 @@ def query_all(sql, val):
     finally:
         if db.is_connected():
             cursor.close()
-        if db:
-            db.close()
+        db.close()
 
 
 def query_one(sql, val):

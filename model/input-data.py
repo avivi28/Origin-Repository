@@ -3,7 +3,7 @@ import mysql.connector.pooling
 import os
 from dotenv import load_dotenv
 
-load_dotenv("./data/.env")
+load_dotenv()
 
 poolname = "mysqlpool"
 poolsize = 3
@@ -15,9 +15,11 @@ CONFIG = {
     "database": os.getenv("mysql_database"),
 }
 
-connectionpool = mysql.connector.pooling.MySQLConnectionPool(
-    pool_name=poolname, pool_size=poolsize, pool_reset_session=True, **CONFIG, auth_plugin='mysql_native_password')
-db = connectionpool.get_connection()
+db = mysql.connector.connect(pool_name=poolname, pool_size=poolsize,
+                             pool_reset_session=True, auth_plugin='mysql_native_password', **CONFIG)
+connectionPool = mysql.connector.pooling.MySQLConnectionPool(
+    pool_name=poolname, pool_size=poolsize, pool_reset_session=True, auth_plugin='mysql_native_password', **CONFIG)  # connection pool
+db = connectionPool.get_connection()  # get data from connection pool
 cursor = db.cursor()
 
 f = open('taipei-attractions.json', encoding="utf-8")
@@ -40,7 +42,7 @@ for all_data in sorted_result:
         if x.endswith(".jpg") or x.endswith(".JPG"):
             sorted_image.append("https"+x)
     sorted_image = str(sorted_image)
-    sql = "INSERT INTO attractions (id, name, category, description, address, transport, mrt, latitude, longitude, images) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    sql = "INSERT INTO attractions (attractions_id, attractions_name, category, description, address, transport, mrt, latitude, longitude, images) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     val = (id, name, cat, description, address, transport,
            mrt, latitude, longitude, sorted_image)
     cursor.execute(sql, val)
