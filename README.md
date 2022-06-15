@@ -8,6 +8,8 @@
 
 🤖 Display account: `panda@panda.com`/`panda`
 
+💵 Payment Test: `424242424242`/`0123`/`123`
+
 ### Main Features:
 
 ![ezgif-1-c0ed11ece0](https://user-images.githubusercontent.com/95410966/173286308-13b22667-d4fa-4d84-82c9-ba183a85f804.gif)
@@ -24,15 +26,20 @@
 
 ### Backend Techniques 📦:
 
+- Containerization
+  - `Docker`
 - Web Framwork
   - `Python`/ `Flask`
 - Database
   - `MySQL`
 - Cloud Services (**AWS**)
   - `EC2`
+  - `RDS`
 - Authentication
   - `Bcrypt`
   - `JSON Web Token (JWT)`
+- CICD
+  - `Jenkins`
 - Architectural pattern
   - `MVC`
 - Version Control
@@ -51,7 +58,7 @@
 
 ### Architecture Diagram 🏰:
 
-![image_2022-06-13_13-16-05](https://user-images.githubusercontent.com/95410966/173284630-57d7a10b-1d95-4314-83d5-e8c271301ce9.png)
+![image](https://user-images.githubusercontent.com/95410966/173764726-6dfde423-cf73-4f34-adc2-1e384bc7e69a.png)
 
 ### Figma Prototype 👩🏻‍🎨:
 
